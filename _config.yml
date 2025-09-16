@@ -40,13 +40,13 @@ author: Jay Guley
 #   "Copyright (c) 2017-{currentYear} <a href="https://example.com">{author}</a>"
 #   "Copyright © 2017-2021 Foobar"
 #
-copyright: "Unpublished Work (cleft) 2017-{currentYear} {author}"
+copyright: "Copyright © 2017-{currentYear} {author}"
 
 description: >- # this means to ignore newlines until "baseurl:"
   Custom web solutions built with PHP, Python, and modern technologies, optimized for performance and search visibility. Expert server setup and management to enhance your online presence.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://webc.com.tr" # the base hostname & protocol for your site, e.g. https://example.com
-favicon: "" # the favicon for your site
+favicon: "https://webc.com.tr/assets/images/favicon.png" # the favicon for your site
 
 # Yat date format
 # refer to https://shopify.github.io/liquid/filters/date/ if you want to customize this
