@@ -1,9 +1,164 @@
 ---
 layout: articles
 heading: 'Professional Web Development & SEO Solutions'
-subheading: 'Custom web solutions built with PHP, Python, and modern technologies, optimized for performance and search
-visibility. Expert server setup and management to enhance your online presence.'
+subheading: 'Custom web solutions built with PHP, Python, and modern technologies, optimized for performance and search visibility. Expert server setup and management to enhance your online presence.'
 banner: 'default'
 ---
+<style>
+/* --- Section Styling --- */
+.page-section {
+  padding: 6rem 0;
+}
 
-{{ content }}
+.section-heading {
+  font-size: 2.5rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.section-subheading {
+  font-size: 1rem;
+  font-weight: 400;
+  font-style: italic;
+  margin-bottom: 4rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-muted {
+  color: #6c757d !important;
+}
+
+.bg-light {
+    background-color: #f8f9fa !important;
+}
+
+.container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+@media (min-width: 992px) {
+    .container {
+        max-width: 960px;
+    }
+}
+
+
+/* --- Expertise Grid Styling --- */
+.expertise-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* Mobilde tek sütun */
+  gap: 2rem;
+}
+
+/* Orta ve büyük ekranlarda 3 sütun */
+@media (min-width: 768px) {
+  .expertise-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.expertise-item {
+  text-align: center;
+}
+
+.expertise-item .item-heading {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+
+/* --- Button Styling --- */
+.btn {
+  display: inline-block;
+  font-weight: 400;
+  color: #212529;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+  background-color: transparent;
+  border: 1px solid transparent;
+  padding: 0.75rem 1.25rem;
+  font-size: 1.15rem;
+  line-height: 1.5;
+  border-radius: 0.3rem;
+  text-decoration: none;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-primary:hover {
+  color: #fff;
+  background-color: #0069d9;
+  border-color: #0062cc;
+}
+
+.btn-xl {
+    padding: 1.25rem 2.5rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+</style>
+<section class="page-section" id="expertise">
+  <div class="container">
+    <div class="text-center">
+      <h2 class="section-heading">Our Expertise</h2>
+      <p class="section-subheading text-muted">Comprehensive web services for businesses of all sizes. Expert guidance on technology selection, digital strategy development, and online presence optimization to maximize your ROI.</p>
+    </div>
+    <div class="expertise-grid">
+      <div class="expertise-item">
+        <h3 class="item-heading">Web Development</h3>
+        <p class="text-muted">Custom websites and applications built with PHP, Python, and other modern technologies tailored to your specific business requirements and goals.</p>
+      </div>
+      <div class="expertise-item">
+        <h3 class="item-heading">Server Management</h3>
+        <p class="text-muted">Professional configuration, optimization, and maintenance services to ensure your web applications run smoothly, securely, and efficiently.</p>
+      </div>
+      <div class="expertise-item">
+        <h3 class="item-heading">SEO Optimization</h3>
+        <p class="text-muted">Data-driven SEO strategies that improve your visibility, drive qualified traffic, and increase conversions for sustainable business growth.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="page-section bg-light" id="why-us">
+  <div class="container">
+    <div class="text-center">
+      <h2 class="section-heading">Why Choose WEBC</h2>
+    </div>
+    <div class="row">
+      <div class="col-lg-8 mx-auto text-center">
+        <p class="large text-muted">With over 15 years of experience in web development and digital optimization, WEBC (Web Consulting) delivers tailored solutions that drive measurable results for businesses across industries.</p>
+        <p class="text-muted">Our approach combines technical expertise in multiple programming languages with an SEO-first methodology, ensuring your web presence not only looks great but performs exceptionally well in search results.</p>
+        <p class="text-muted">We believe in transparency, collaboration, and delivering value that exceeds expectations. Our clients choose us for our comprehensive understanding of both the technical and marketing aspects of web presence.</p>
+        <a href="#contact" class="btn btn-primary btn-xl">Start your project today</a>
+      </div>
+    </div>
+    <div class="get-started-snippet text-center mt-5">
+        <h4>Get Started</h4>
+        <p class="text-muted">Everything you need in knowledge to web presence.</p>
+    </div>
+  </div>
+</section>
+
+<section class="page-section" id="process">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading">Our Process</h2>
+            <p class="section-subheading text-muted">How we deliver exceptional web solutions. We manage the deployment process and provide ongoing support and maintenance to keep your web presence running smoothly.</p>
+        </div>
+        </div>
+</section>
