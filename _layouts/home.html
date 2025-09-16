@@ -5,5 +5,111 @@ subheading: 'Custom web solutions built with PHP, Python, and modern technologie
 visibility. Expert server setup and management to enhance your online presence.'
 banner: 'default'
 ---
+<style>
+/* --- Sayfa İçeriği Bölüm Stilleri Başlangıcı --- */
 
-<p>hi!</p>
+.content-section {
+  padding: 40px 0; /* Bölümler arasına dikey boşluk ekler */
+  border-bottom: 1px solid #e8e8e8; /* Bölümleri ayırmak için ince bir çizgi */
+}
+
+.content-section:last-child {
+  border-bottom: none; /* Son bölümün altında çizgi olmasın */
+}
+
+.section-title {
+  font-size: 28px; /* Ana başlık boyutu */
+  margin-bottom: 10px;
+}
+
+.section-subtitle {
+  font-size: 18px; /* Alt başlık boyutu */
+  color: #828282; /* Daha soluk bir renk */
+  margin-bottom: 25px;
+  font-weight: 400; /* Daha ince bir font */
+}
+
+.expertise-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr; /* Üç sütunlu ızgara yapısı */
+  gap: 30px; /* Sütunlar arası boşluk */
+  margin-top: 30px;
+}
+
+.expertise-item h3 {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.process-list {
+  list-style: none; /* Madde işareti olmasın */
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.process-list li {
+  position: relative;
+  padding-left: 25px; /* İçerik için solda boşluk */
+  margin-bottom: 15px; /* Maddeler arası dikey boşluk */
+}
+
+.process-list li::before {
+  content: '✓'; /* Her maddenin başına tik işareti ekler */
+  position: absolute;
+  left: 0;
+  color: #ff5100; /* Ana CSS'deki vurgu rengi */
+  font-weight: bold;
+}
+
+/* Mobil cihazlar için (800px ve altı) */
+@media screen and (max-width: 800px) {
+  .expertise-grid {
+    grid-template-columns: 1fr; /* Izgara yapısını tek sütuna düşürür */
+  }
+  
+  .section-title {
+    font-size: 24px;
+  }
+}
+
+/* --- Sayfa İçeriği Bölüm Stilleri Bitişi --- */
+</style>
+<div class="content-section">
+  <h3 class="section-subtitle">Our Expertise</h3>
+  <h2 class="section-title">Comprehensive web services for businesses of all sizes</h2>
+  <p>Expert guidance on technology selection, digital strategy development, and online presence optimization to maximize your ROI.</p>
+
+  <div class="expertise-grid">
+    <div class="expertise-item">
+      <h3>Web Development</h3>
+      <p>Custom websites and applications built with PHP, Python, and other modern technologies tailored to your specific business requirements and goals.</p>
+    </div>
+    <div class="expertise-item">
+      <h3>Server Management</h3>
+      <p>Professional configuration, optimization, and maintenance services to ensure your web applications run smoothly, securely, and efficiently.</p>
+    </div>
+    <div class="expertise-item">
+      <h3>SEO Optimization</h3>
+      <p>Data-driven SEO strategies that improve your visibility, drive qualified traffic, and increase conversions for sustainable business growth.</p>
+    </div>
+  </div>
+</div>
+
+<div class="content-section">
+  <h2 class="section-title">Why Choose WEBC</h2>
+  <p>With over 15 years of experience in web development and digital optimization, WEBC (Web Consulting) delivers tailored solutions that drive measurable results for businesses across industries.</p>
+  <p>Our approach combines technical expertise in multiple programming languages with an SEO-first methodology, ensuring your web presence not only looks great but performs exceptionally well in search results.</p>
+  <p>We believe in transparency, collaboration, and delivering value that exceeds expectations. Our clients choose us for our comprehensive understanding of both the technical and marketing aspects of web presence.</p>
+</div>
+
+<div class="content-section">
+  <h2 class="section-title">Our Process</h2>
+  <h4 class="section-subtitle">How we deliver exceptional web solutions</h4>
+  <ul class="process-list">
+    <li>We start by understanding your business goals, target audience, and technical requirements through in-depth consultation.</li>
+    <li>Based on our findings, we create a comprehensive strategy that outlines the technologies, structure, and optimization approach.</li>
+    <li>Our team develops your solution using best practices in PHP, Python, or other appropriate technologies.</li>
+    <li>We implement advanced SEO techniques to ensure maximum visibility and performance in search results.</li>
+    <li>We manage the deployment process and provide ongoing support and maintenance to keep your web presence running smoothly.</li>
+  </ul>
+</div>
