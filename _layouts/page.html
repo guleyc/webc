@@ -1,7 +1,6 @@
 ---
 layout: framework
 banner:
-banner_html: post-header.html
 hidden: []
 ---
 
@@ -16,29 +15,6 @@ hidden: []
     {%- include functions.html func='get_value' -%}
     {%- assign hidden = return -%}
 
-    {%- assign result = hidden | where_exp: "item", "item == 'header'" -%}
-    {%- if banner == nil and result.size == 0 -%}
-    {%- include views/post-header.html -%}
-    {%- endif -%}
-
     {%- include views/article.html -%}
-
-    {%- assign result = hidden | where_exp: "item", "item == 'navigator'" -%}
-    {%- if result.size == 0 -%}
-    <div class="post-nav">
-      {%- if page.previous -%}
-        <a class="previous" href="{{ page.previous.url | relative_url }}" title="{{
-          page.previous.title | escape }}">{{ page.previous.title | escape | truncatewords: 6 }}</a>
-      {%- else -%}
-      <span></span>
-      {%- endif -%}
-
-      {%- if page.next -%}
-        <a class="next" href="{{ page.next.url | relative_url }}" title="{{ page.next.title | escape }}">{{ page.next.title | escape | truncatewords: 6 }}</a>
-      {%- else -%}
-      <span></span>
-      {%- endif -%}
-    </div>
-    {%- endif -%}
   </section>
 </div>
