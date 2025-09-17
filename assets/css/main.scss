@@ -16,8 +16,6 @@ $brand-colors: (
   "greenblue": #389092,
 );
 
-$font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-
 $theme-name: "{{ site.theme_color }}";
 $brand-name: "{{ site.brand_color }}";
 $theme-color: map-get($theme-colors, "snowwhite");
@@ -36,9 +34,5 @@ $brand-color: map-get($brand-colors, "orangered");
 }
 
 $content-width: {{ site.content_width | default: '920px' }};
-
-body {
-  font-family: $font-family-sans-serif;
-}
 
 @import "yat";
