@@ -132,12 +132,13 @@ html {
     line-height: $base-line-height;
     color: $header-text-color;
     transition: 0.1s ease-in-out;
+    font-weight: bold;
 
     // Gaps between nav items, but not on the last one
     &:not(:last-child) {
       margin-right: 24px;
       &:hover {
-        text-decoration: underline;
+        text-decoration: none;
       }
     }
   }
