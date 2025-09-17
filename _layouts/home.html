@@ -6,33 +6,31 @@ visibility. Expert server setup and management to enhance your online presence.'
 banner: 'default'
 ---
 <style>
-/* --- Sayfa İçeriği Bölüm Stilleri Başlangıcı --- */
-
 .content-section {
-  padding: 40px 0; /* Bölümler arasına dikey boşluk ekler */
-  border-bottom: 1px solid #e8e8e8; /* Bölümleri ayırmak için ince bir çizgi */
+  padding: 40px 0;
+  border-bottom: 1px solid #e8e8e8;
 }
 
 .content-section:last-child {
-  border-bottom: none; /* Son bölümün altında çizgi olmasın */
+  border-bottom: none;
 }
 
 .section-title {
-  font-size: 28px; /* Ana başlık boyutu */
+  font-size: 28px;
   margin-bottom: 10px;
 }
 
 .section-subtitle {
-  font-size: 18px; /* Alt başlık boyutu */
-  color: #828282; /* Daha soluk bir renk */
+  font-size: 18px;
+  color: #828282;
   margin-bottom: 25px;
-  font-weight: 400; /* Daha ince bir font */
+  font-weight: 400;
 }
 
 .expertise-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr; /* Üç sütunlu ızgara yapısı */
-  gap: 30px; /* Sütunlar arası boşluk */
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 30px;
   margin-top: 30px;
 }
 
@@ -42,37 +40,34 @@ banner: 'default'
 }
 
 .process-list {
-  list-style: none; /* Madde işareti olmasın */
+  list-style: none;
   margin-left: 0;
   padding-left: 0;
 }
 
 .process-list li {
   position: relative;
-  padding-left: 25px; /* İçerik için solda boşluk */
-  margin-bottom: 15px; /* Maddeler arası dikey boşluk */
+  padding-left: 25px;
+  margin-bottom: 15px;
 }
 
 .process-list li::before {
-  content: '✓'; /* Her maddenin başına tik işareti ekler */
+  content: '✓';
   position: absolute;
   left: 0;
-  color: #ff5100; /* Ana CSS'deki vurgu rengi */
+  color: #ff5100;
   font-weight: bold;
 }
 
-/* Mobil cihazlar için (800px ve altı) */
 @media screen and (max-width: 800px) {
   .expertise-grid {
-    grid-template-columns: 1fr; /* Izgara yapısını tek sütuna düşürür */
+    grid-template-columns: 1fr;
   }
   
   .section-title {
     font-size: 24px;
   }
 }
-
-/* --- Sayfa İçeriği Bölüm Stilleri Bitişi --- */
 </style>
 <div class="content-section">
   <h3 class="section-subtitle">Our Expertise</h3>
