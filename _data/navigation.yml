@@ -1,0 +1,12 @@
+# _data/navigation.yml
+
+- title: Home
+  url: /
+- title: About Us
+  url: /about.html/
+- title: Services
+  url: /services.html/
+- title: Archives
+  url: /archives.html/
+- title: Contact
+  url: /contact.html/
