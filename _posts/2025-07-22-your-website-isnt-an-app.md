@@ -5,7 +5,7 @@ subtitle: "On the lost art of server-side rendering and why we're drowning in un
 author: Jay Guley
 categories: [architecture, web, performance]
 banner:
-  image: "https://images.unsplash.com/photo-1555949963-ff980e62203b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+  image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
   opacity: 0.75
   background: "#111"
   height: "80vh"

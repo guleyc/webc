@@ -5,7 +5,7 @@ subtitle: "Why real-world performance is so much more than a perfect score in a 
 author: Jay Guley
 categories: [performance, web, seo]
 banner:
-  image: "https://images.unsplash.com/photo-1560243409-335a167a5307?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+  image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1472&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
   opacity: 0.7
   background: "#000"
   height: "80vh"
