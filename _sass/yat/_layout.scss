@@ -103,6 +103,13 @@ html {
     &, &:visited {
       color: $header-text-color;
     }
+      .site-logo-svg {
+      height: $header-height / 1.5;
+      width: auto;
+      vertical-align: middle;
+      margin-right: 5px;
+      display: inline-block;
+    }
 
     .site-favicon {
       display: inline-block;
