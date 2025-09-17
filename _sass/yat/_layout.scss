@@ -119,6 +119,7 @@ html {
   position: absolute;
   right: 0;
   top: 0;
+  font-weight: bold;
 
   .nav-trigger {
     display: none;
@@ -132,7 +133,6 @@ html {
     line-height: $base-line-height;
     color: $header-text-color;
     transition: 0.1s ease-in-out;
-    font-weight: bold;
 
     // Gaps between nav items, but not on the last one
     &:not(:last-child) {
@@ -674,7 +674,7 @@ html {
         color: #fff;
 
         &:hover {
-          text-decoration: underline;
+          text-decoration: none;
         }
       }
     }
