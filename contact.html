@@ -1,0 +1,64 @@
+---
+layout: page
+title: Contact
+---
+
+
+<h2>Get in Touch</h2>
+
+<form
+  action="https://formspree.io/f/xldwylqb" method="POST"
+>
+  <label>
+    Your name:
+    <input type="text" name="name" required>
+  </label>
+  <br>
+  <label>
+    Your email:
+    <input type="email" name="email" required>
+  </label>
+  <br>
+  <label>
+    Your message:
+    <textarea name="message" required></textarea>
+  </label>
+  <br>
+  <button type="submit">Send</button>
+</form>
+
+<style>
+  form {
+    margin-top: 2em;
+  }
+  form label {
+    display: block;
+    margin-bottom: 1em;
+    font-weight: bold;
+  }
+  form input,
+  form textarea {
+    width: 100%;
+    padding: 0.5em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 0.5em;
+    box-sizing: border-box;
+  }
+  form textarea {
+    min-height: 150px;
+    resize: vertical;
+  }
+  form button {
+    padding: 0.7em 1.5em;
+    border: none;
+    background-color: #333;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+  }
+  form button:hover {
+    background-color: #555;
+  }
+</style>
