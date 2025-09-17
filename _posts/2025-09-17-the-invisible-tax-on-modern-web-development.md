@@ -5,11 +5,15 @@ subtitle: "We love our shiny tools and one-line installs, but are we ignoring th
 author: Jay Guley
 categories: [web, development, performance]
 banner:
-  image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
-  opacity: 0.8
+  video: https://vjs.zencdn.net/v/oceans.mp4
+  loop: true
+  volume: 0
+  start_at: 8.5
+  image: https://bit.ly/3xTmdUP
+  opacity: 0.618
   background: "#121212"
-  height: "80vh"
-  min_height: "40vh"
+  height: "100vh"
+  min_height: "38vh"
   heading_style: "font-size: 3.5em; font-weight: bold;"
   subheading_style: "font-size: 1.2em;"
 tags: [javascript, frameworks, performance, npm, complexity, web-vitals]
