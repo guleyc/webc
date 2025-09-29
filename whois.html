@@ -1,0 +1,470 @@
+---
+layout: page
+title: WHOIS Domain Lookup
+---
+
+<style>
+.whois-tool {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.whois-search-box {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.whois-search-box h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.whois-search-box p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.search-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.search-input {
+    flex: 1;
+    padding: 12px 16px;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    transition: border-color 0.3s;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #0066cc;
+}
+
+.search-button {
+    padding: 12px 30px;
+    font-size: 16px;
+    font-weight: 600;
+    background: #0066cc;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.search-button:hover {
+    background: #0052a3;
+}
+
+.search-button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.tld-suggestions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.tld-tag {
+    padding: 6px 12px;
+    background: #e9ecef;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.tld-tag:hover {
+    background: #dee2e6;
+}
+
+.loading {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+}
+
+.spinner {
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #0066cc;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 15px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.result-box {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.status-available {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-taken {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.status-unknown {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.domain-info {
+    margin: 20px 0;
+}
+
+.info-row {
+    display: flex;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.info-row:last-child {
+    border-bottom: none;
+}
+
+.info-label {
+    font-weight: 600;
+    color: #555;
+    width: 180px;
+    flex-shrink: 0;
+}
+
+.info-value {
+    color: #333;
+    word-break: break-word;
+}
+
+.register-section {
+    margin-top: 25px;
+    padding-top: 25px;
+    border-top: 2px solid #eee;
+}
+
+.register-section h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.register-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.register-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+.register-btn:hover {
+    background: #218838;
+}
+
+.register-btn.secondary {
+    background: #6c757d;
+}
+
+.register-btn.secondary:hover {
+    background: #5a6268;
+}
+
+.whois-data {
+    margin-top: 25px;
+    padding-top: 25px;
+    border-top: 2px solid #eee;
+}
+
+.whois-data h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.whois-raw {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 20px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    max-height: 500px;
+    overflow-y: auto;
+    color: #333;
+}
+
+.error-box {
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 8px;
+    padding: 20px;
+    color: #721c24;
+}
+
+.error-box h3 {
+    margin-top: 0;
+    color: #721c24;
+}
+
+@media (max-width: 768px) {
+    .search-form {
+        flex-direction: column;
+    }
+    
+    .info-row {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .info-label {
+        width: auto;
+    }
+    
+    .register-buttons {
+        flex-direction: column;
+    }
+    
+    .register-btn {
+        text-align: center;
+    }
+}
+</style>
+
+<div class="whois-tool">
+    <div class="whois-search-box">
+        <h2>🔍 WHOIS Domain Lookup</h2>
+        <p>Check domain availability and view detailed WHOIS information for any domain name.</p>
+        
+        <form class="search-form" id="whoisForm">
+            <input 
+                type="text" 
+                class="search-input" 
+                id="domainInput" 
+                placeholder="Enter domain name (e.g., example.com or example.com.tr)"
+                required
+            >
+            <button type="submit" class="search-button" id="searchButton">
+                Search
+            </button>
+        </form>
+        
+        <div class="tld-suggestions">
+            <button class="tld-tag" onclick="quickSearch('.com')">.com</button>
+            <button class="tld-tag" onclick="quickSearch('.net')">.net</button>
+            <button class="tld-tag" onclick="quickSearch('.org')">.org</button>
+            <button class="tld-tag" onclick="quickSearch('.com.tr')">.com.tr</button>
+            <button class="tld-tag" onclick="quickSearch('.com.au')">.com.au</button>
+            <button class="tld-tag" onclick="quickSearch('.io')">.io</button>
+            <button class="tld-tag" onclick="quickSearch('.co')">.co</button>
+        </div>
+    </div>
+    
+    <div id="resultsContainer"></div>
+</div>
+
+<script>
+const API_ENDPOINT = 'https://tools.webc.com.tr/whois-api.php';
+
+const form = document.getElementById('whoisForm');
+const input = document.getElementById('domainInput');
+const button = document.getElementById('searchButton');
+const resultsContainer = document.getElementById('resultsContainer');
+
+form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const domain = input.value.trim();
+    if (domain) {
+        performWhoisLookup(domain);
+    }
+});
+
+function quickSearch(tld) {
+    const currentValue = input.value.trim().replace(/\.(com|net|org|io|co|com\.tr|com\.au)$/i, '');
+    input.value = currentValue + tld;
+    performWhoisLookup(input.value);
+}
+
+function performWhoisLookup(domain) {
+    button.disabled = true;
+    button.textContent = 'Searching...';
+    
+    resultsContainer.innerHTML = `
+        <div class="loading">
+            <div class="spinner"></div>
+            <p>Looking up domain information...</p>
+        </div>
+    `;
+    
+    fetch(`${API_ENDPOINT}?domain=${encodeURIComponent(domain)}`)
+        .then(response => response.json())
+        .then(data => {
+            displayResults(data);
+        })
+        .catch(error => {
+            displayError(error.message);
+        })
+        .finally(() => {
+            button.disabled = false;
+            button.textContent = 'Search';
+        });
+}
+
+function displayResults(data) {
+    if (!data.success) {
+        displayError(data.message || 'An error occurred during the lookup.');
+        return;
+    }
+    
+    const available = data.available;
+    const statusClass = available === true ? 'status-available' : 
+                       available === false ? 'status-taken' : 'status-unknown';
+    const statusText = available === true ? '✅ Available' : 
+                      available === false ? '❌ Taken' : '⚠️ Status Unknown';
+    
+    let html = `
+        <div class="result-box">
+            <h2>${data.domain}</h2>
+            <div class="status-badge ${statusClass}">${statusText}</div>
+            
+            <div class="domain-info">
+                <div class="info-row">
+                    <div class="info-label">TLD:</div>
+                    <div class="info-value">.${data.tld}</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">WHOIS Server:</div>
+                    <div class="info-value">${data.whois_server}</div>
+                </div>
+    `;
+    
+    if (data.parsed_info && !available) {
+        if (data.parsed_info.registrar) {
+            html += `
+                <div class="info-row">
+                    <div class="info-label">Registrar:</div>
+                    <div class="info-value">${escapeHtml(data.parsed_info.registrar)}</div>
+                </div>
+            `;
+        }
+        if (data.parsed_info.creation_date) {
+            html += `
+                <div class="info-row">
+                    <div class="info-label">Creation Date:</div>
+                    <div class="info-value">${escapeHtml(data.parsed_info.creation_date)}</div>
+                </div>
+            `;
+        }
+        if (data.parsed_info.expiry_date) {
+            html += `
+                <div class="info-row">
+                    <div class="info-label">Expiry Date:</div>
+                    <div class="info-value">${escapeHtml(data.parsed_info.expiry_date)}</div>
+                </div>
+            `;
+        }
+        if (data.parsed_info.status) {
+            html += `
+                <div class="info-row">
+                    <div class="info-label">Status:</div>
+                    <div class="info-value">${escapeHtml(data.parsed_info.status)}</div>
+                </div>
+            `;
+        }
+    }
+    
+    html += '</div>';
+    
+    if (available) {
+        html += `
+            <div class="register-section">
+                <h3>Register This Domain</h3>
+                <p>This domain appears to be available! Register it now:</p>
+                <div class="register-buttons">
+                    <a href="${data.register_urls.namecheap}" target="_blank" class="register-btn">
+                        Register on Namecheap
+                    </a>
+                    <a href="${data.register_urls.cloudflare}" target="_blank" class="register-btn secondary">
+                        Cloudflare Registrar
+                    </a>
+                    <a href="${data.register_urls.godaddy}" target="_blank" class="register-btn secondary">
+                        GoDaddy
+                    </a>
+                </div>
+            </div>
+        `;
+    }
+    
+    if (data.whois_data) {
+        html += `
+            <div class="whois-data">
+                <h3>Raw WHOIS Data</h3>
+                <div class="whois-raw">${escapeHtml(data.whois_data)}</div>
+            </div>
+        `;
+    }
+    
+    html += '</div>';
+    
+    resultsContainer.innerHTML = html;
+}
+
+function displayError(message) {
+    resultsContainer.innerHTML = `
+        <div class="error-box">
+            <h3>⚠️ Error</h3>
+            <p>${escapeHtml(message)}</p>
+            <p>Please check your domain name and try again.</p>
+        </div>
+    `;
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+</script>
