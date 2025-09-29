@@ -1,0 +1,131 @@
+---
+layout: page
+title: Tools
+---
+
+    <style>
+        .jekyll-content h2 {
+            font-size: 2.25rem; /* 36px */
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        .jekyll-content p {
+            margin-bottom: 1.5rem;
+            line-height: 1.75;
+        }
+
+        .tools-container {
+            width: 100%;
+            max-width: 56rem; /* 896px */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem; /* 24px */
+        }
+
+        @media (min-width: 768px) {
+            .tools-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Tool Card */
+        .tool-card {
+            display: block;
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            border-radius: 0.5rem; /* 8px */
+            padding: 1.5rem; /* 24px */
+            text-decoration: none;
+            transition: all 300ms ease-in-out;
+        }
+
+        .tool-card:hover {
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            transform: translateY(-4px);
+        }
+
+        .tool-card-title {
+            font-size: 1.25rem; /* 20px */
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 0.5rem; /* 8px */
+            transition: color 300ms ease-in-out;
+        }
+
+        .tool-card:hover .tool-card-title {
+            color: #2563eb;
+        }
+
+        .tool-card-description {
+            color: #4b5563;
+        }
+
+        /* Placeholder Card */
+        .placeholder-card {
+            background-color: #f3f4f6;
+            border: 2px dashed #d1d4d7;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 140px; /* To match the other card's approximate height */
+        }
+
+        .placeholder-text {
+            color: #6b7280;
+        }
+
+        /* Dark Mode Styles */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #111827; /* gray-900 */
+                color: #e5e7eb; /* gray-200 */
+            }
+            .tool-card {
+                background-color: #1f2937; /* gray-800 */
+                border-color: #374151; /* gray-700 */
+            }
+
+            .tool-card-title {
+                color: #ffffff;
+            }
+
+            .tool-card:hover .tool-card-title {
+                color: #60a5fa; /* blue-400 */
+            }
+
+            .tool-card-description {
+                color: #9ca3af; /* gray-400 */
+            }
+
+            .placeholder-card {
+                background-color: rgba(31, 41, 55, 0.5); /* gray-800/50 */
+                border-color: #4b5563; /* gray-600 */
+            }
+
+            .placeholder-text {
+                color: #9ca3af; /* gray-400 */
+            }
+        }
+    </style>
+
+<h2>Tools</h2>
+
+        <div class="tools-container">
+             <div class="tools-grid">
+
+                 <a href="/whois.html" class="tool-card">
+                    <h3 class="tool-card-title">Domain WHOIS Lookup</h3>
+                    <p class="tool-card-description">Check the registration status and public records of any domain name.</p>
+                 </a>
+
+             </div>
+        </div>
