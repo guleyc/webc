@@ -3,86 +3,76 @@ layout: page
 title: Tools
 ---
 
-    <style>
+<style>
+    .tools-container {
+        width: 100%;
+        max-width: 56rem; /* 896px */
+        margin-left: auto;
+        margin-right: auto;
+    }
 
-        .tools-container {
-            width: 100%;
-            max-width: 56rem; /* 896px */
-            margin-left: auto;
-            margin-right: auto;
-        }
+    .tools-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem; /* 24px */
+    }
 
+    @media (min-width: 768px) {
         .tools-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem; /* 24px */
+            grid-template-columns: repeat(2, 1fr);
         }
+    }
 
-        @media (min-width: 768px) {
-            .tools-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
+    .tool-card {
+        display: block;
+        background-color: #ffffff;
+        border: 1px solid #e5e7eb;
+        box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        border-radius: 0.5rem; /* 8px */
+        padding: 1.5rem; /* 24px */
+        text-decoration: none;
+        transition: all 300ms ease-in-out;
+    }
 
-        /* Tool Card */
-        .tool-card {
-            display: block;
-            background-color: #ffffff;
-            border: 1px solid #e5e7eb;
-            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            border-radius: 0.5rem; /* 8px */
-            padding: 1.5rem; /* 24px */
-            text-decoration: none;
-            transition: all 300ms ease-in-out;
-        }
+    .tool-card:hover {
+        box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        transform: translateY(-4px);
+    }
 
-        .tool-card:hover {
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-            transform: translateY(-4px);
-        }
+    .tool-card-title {
+        font-size: 1.25rem; /* 20px */
+        font-weight: 700;
+        color: #111827;
+        margin-bottom: 0.5rem; /* 8px */
+        transition: color 300ms ease-in-out;
+    }
 
-        .tool-card-title {
-            font-size: 1.25rem; /* 20px */
-            font-weight: 700;
-            color: #111827;
-            margin-bottom: 0.5rem; /* 8px */
-            transition: color 300ms ease-in-out;
-        }
+    .tool-card:hover .tool-card-title {
+        color: #2563eb;
+    }
 
-        .tool-card:hover .tool-card-title {
-            color: #2563eb;
-        }
+    .tool-card-description {
+        color: #4b5563;
+    }
 
-        .tool-card-description {
-            color: #4b5563;
-        }
+    html[data-theme="dark"] .tool-card {
+        background-color: #1f2937; /* gray-800 */
+        border-color: #374151; /* gray-700 */
+    }
 
+    html[data-theme="dark"] .tool-card-title {
+        color: #ffffff;
+    }
 
-        /* Dark Mode Styles */
-        @media (prefers-color-scheme: dark) {
-            body {
-                background-color: #111827; /* gray-900 */
-                color: #e5e7eb; /* gray-200 */
-            }
-            .tool-card {
-                background-color: #1f2937; /* gray-800 */
-                border-color: #374151; /* gray-700 */
-            }
+    html[data-theme="dark"] .tool-card:hover .tool-card-title {
+        color: #60a5fa; /* blue-400 */
+    }
 
-            .tool-card-title {
-                color: #ffffff;
-            }
+    html[data-theme="dark"] .tool-card-description {
+        color: #9ca3af; /* gray-400 */
+    }
 
-            .tool-card:hover .tool-card-title {
-                color: #60a5fa; /* blue-400 */
-            }
-
-            .tool-card-description {
-                color: #9ca3af; /* gray-400 */
-            }
-
-        }
-    </style>
+</style>
 
 <h2>Tools</h2>
 
