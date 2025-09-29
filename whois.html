@@ -382,6 +382,14 @@ function displayResults(data) {
     `;
     
     if (data.parsed_info && !available) {
+        if (data.parsed_info.organization) {
+            html += `
+                <div class="info-row">
+                    <div class="info-label">Organization:</div>
+                    <div class="info-value">${escapeHtml(data.parsed_info.organization)}</div>
+                </div>
+            `;
+        }
         if (data.parsed_info.registrar) {
             html += `
                 <div class="info-row">
