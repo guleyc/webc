@@ -111,76 +111,47 @@ title: Website Screenshot
     font-size: 28px;
 }
 
-.screenshot-services {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
+.preview-section {
     margin: 30px 0;
 }
 
-.service-card {
+.preview-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.tab-button {
+    padding: 12px 20px;
     background: #f8f9fa;
-    border-radius: 12px;
-    padding: 25px;
     border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
     transition: all 0.3s;
 }
 
-.service-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+.tab-button:hover {
+    background: #e9ecef;
+}
+
+.tab-button.active {
+    background: #0066cc;
+    color: white;
     border-color: #0066cc;
 }
 
-.service-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 15px;
-}
-
-.service-icon {
-    font-size: 32px;
-}
-
-.service-name {
-    font-size: 18px;
-    font-weight: 700;
-    color: #333;
-}
-
-.service-description {
-    color: #666;
-    font-size: 14px;
-    line-height: 1.6;
-    margin-bottom: 15px;
-}
-
-.service-badge {
-    display: inline-block;
-    padding: 4px 10px;
-    background: #d4edda;
-    color: #155724;
-    border-radius: 12px;
-    font-size: 12px;
-    font-weight: 600;
-    margin-bottom: 15px;
-}
-
-.service-badge.premium {
-    background: #fff3cd;
-    color: #856404;
-}
-
 .screenshot-preview {
-    margin: 20px 0;
-    border-radius: 8px;
+    border-radius: 12px;
     overflow: hidden;
     background: #f8f9fa;
-    min-height: 200px;
+    min-height: 400px;
     display: flex;
     align-items: center;
     justify-content: center;
+    border: 2px solid #e0e0e0;
+    position: relative;
 }
 
 .screenshot-preview img {
@@ -190,98 +161,88 @@ title: Website Screenshot
 }
 
 .screenshot-loading {
-    padding: 40px;
+    padding: 60px 20px;
     text-align: center;
     color: #666;
 }
 
-.action-buttons {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
+.screenshot-loading .spinner {
+    margin: 0 auto 20px;
 }
 
-.btn {
-    flex: 1;
-    min-width: 120px;
-    padding: 12px 20px;
+.download-btn {
+    margin-top: 15px;
+    padding: 12px 24px;
+    background: #28a745;
+    color: white;
     border: none;
     border-radius: 8px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s;
-    text-align: center;
     text-decoration: none;
     display: inline-block;
 }
 
-.btn-primary {
-    background: #0066cc;
-    color: white;
+.download-btn:hover {
+    background: #218838;
 }
 
-.btn-primary:hover {
-    background: #0052a3;
-}
-
-.btn-secondary {
-    background: #6c757d;
-    color: white;
-}
-
-.btn-secondary:hover {
-    background: #5a6268;
-}
-
-.info-section {
-    margin-top: 30px;
-    padding: 25px;
+.service-info {
+    margin-top: 15px;
+    padding: 15px;
     background: #e7f3ff;
-    border-left: 4px solid #2196f3;
     border-radius: 8px;
-}
-
-.info-section h3 {
-    margin-top: 0;
+    font-size: 14px;
     color: #1976d2;
 }
 
-.info-section ul {
-    margin: 15px 0;
-    padding-left: 25px;
-}
-
-.info-section li {
-    margin: 10px 0;
-    color: #555;
-    line-height: 1.6;
-}
-
-.api-comparison {
+.screenshot-services {
     margin-top: 30px;
-}
-
-.comparison-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 15px;
-}
-
-.comparison-table th,
-.comparison-table td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-.comparison-table th {
+    padding: 25px;
     background: #f8f9fa;
-    font-weight: 600;
+    border-radius: 12px;
+}
+
+.screenshot-services h3 {
+    margin-top: 0;
     color: #333;
 }
 
-.comparison-table tr:hover {
-    background: #f8f9fa;
+.service-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.service-item {
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    border-left: 4px solid #0066cc;
+}
+
+.service-item h4 {
+    margin: 0 0 10px 0;
+    color: #333;
+}
+
+.service-item p {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+}
+
+.service-item a {
+    display: inline-block;
+    margin-top: 10px;
+    color: #0066cc;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.service-item a:hover {
+    text-decoration: underline;
 }
 
 .error-box {
@@ -302,15 +263,11 @@ title: Website Screenshot
         flex-direction: column;
     }
     
-    .screenshot-services {
-        grid-template-columns: 1fr;
-    }
-    
-    .action-buttons {
+    .preview-tabs {
         flex-direction: column;
     }
     
-    .btn {
+    .tab-button {
         width: 100%;
     }
 }
@@ -319,7 +276,7 @@ title: Website Screenshot
 <div class="screenshot-tool">
     <div class="screenshot-search-box">
         <h2>📸 Website Screenshot</h2>
-        <p>Capture screenshots of any website using various screenshot services.</p>
+        <p>Capture screenshots of any website using free screenshot services.</p>
         
         <form class="search-form" id="screenshotForm">
             <input 
@@ -330,7 +287,7 @@ title: Website Screenshot
                 required
             >
             <button type="submit" class="search-button" id="searchButton">
-                Generate Screenshots
+                Generate Screenshot
             </button>
         </form>
     </div>
@@ -375,7 +332,7 @@ function generateScreenshots(domain) {
         })
         .finally(() => {
             button.disabled = false;
-            button.textContent = 'Generate Screenshots';
+            button.textContent = 'Generate Screenshot';
         });
 }
 
@@ -386,179 +343,147 @@ function displayResults(data) {
     }
     
     const urls = data.screenshot_urls;
+    const services = [
+        { name: 'PagePeeker', key: 'pagepeeker', description: '✅ Reliable and fast' },
+        { name: 'S-Shot', key: 's_shot', description: '✅ High quality screenshots' },
+        { name: 'ScreenshotAPI', key: 'screenshotapi', description: '✅ Modern and clean' },
+        { name: 'Microlink', key: 'microlink', description: '⚡ Fast with CDN' }
+    ];
     
     let html = `
         <div class="result-box">
             <div class="screenshot-header">
-                <h2>📸 Screenshot Services for ${data.domain}</h2>
+                <h2>📸 Screenshots for ${data.domain}</h2>
+            </div>
+            
+            <div class="preview-section">
+                <div class="preview-tabs" id="previewTabs">
+    `;
+    
+    services.forEach((service, index) => {
+        html += `
+            <button class="tab-button ${index === 0 ? 'active' : ''}" 
+                    onclick="switchPreview('${service.key}', this)">
+                ${service.name}
+            </button>
+        `;
+    });
+    
+    html += `
+                </div>
+                
+                <div id="previewContainer">
+    `;
+    
+    services.forEach((service, index) => {
+        const isActive = index === 0;
+        html += `
+            <div class="screenshot-preview" id="preview-${service.key}" 
+                 style="display: ${isActive ? 'flex' : 'none'}">
+                <div class="screenshot-loading">
+                    <div class="spinner"></div>
+                    <p>Loading ${service.name} screenshot...</p>
+                </div>
+            </div>
+        `;
+    });
+    
+    html += `
+                </div>
+                
+                <div class="service-info">
+                    💡 <strong>Tip:</strong> Screenshots may take a few seconds to load. 
+                    Try different services if one doesn't work. Right-click to save the image.
+                </div>
             </div>
             
             <div class="screenshot-services">
+                <h3>🌐 Available Screenshot Services</h3>
+                <div class="service-grid">
     `;
     
-    // Thum.io (Free)
+    services.forEach(service => {
+        html += `
+            <div class="service-item">
+                <h4>${service.name}</h4>
+                <p>${service.description}</p>
+                <a href="${urls[service.key]}" target="_blank">Open in New Tab →</a>
+            </div>
+        `;
+    });
+    
+    // Premium services
+    if (data.premium_services) {
+        html += `
+            <div class="service-item">
+                <h4>⭐ Premium Options</h4>
+                <p>For production use with API keys</p>
+        `;
+        
+        Object.values(data.premium_services).forEach(service => {
+            html += `<a href="${service.url}" target="_blank">${service.name} →</a><br>`;
+        });
+        
+        html += `</div>`;
+    }
+    
     html += `
-        <div class="service-card">
-            <div class="service-header">
-                <div class="service-icon">🆓</div>
-                <div class="service-name">Thum.io</div>
-            </div>
-            <div class="service-badge">Free</div>
-            <div class="service-description">
-                Free screenshot service with no API key required. Good for quick previews.
-            </div>
-            <div class="action-buttons">
-                <a href="${urls.thum_io}" target="_blank" class="btn btn-primary">
-                    View Screenshot
-                </a>
+                </div>
             </div>
         </div>
     `;
-    
-    // ScreenshotAPI (Free tier)
-    html += `
-        <div class="service-card">
-            <div class="service-header">
-                <div class="service-icon">🆓</div>
-                <div class="service-name">ScreenshotAPI</div>
-            </div>
-            <div class="service-badge">Free Tier Available</div>
-            <div class="service-description">
-                Simple API for capturing website screenshots. Free tier available with limitations.
-            </div>
-            <div class="action-buttons">
-                <a href="${urls.screenshotapi}" target="_blank" class="btn btn-primary">
-                    View Screenshot
-                </a>
-            </div>
-        </div>
-    `;
-    
-    // Screenshot Machine (Premium)
-    html += `
-        <div class="service-card">
-            <div class="service-header">
-                <div class="service-icon">⭐</div>
-                <div class="service-name">Screenshot Machine</div>
-            </div>
-            <div class="service-badge premium">API Key Required</div>
-            <div class="service-description">
-                Professional screenshot service with high quality outputs and customization options.
-            </div>
-            <div class="action-buttons">
-                <a href="https://screenshotmachine.com" target="_blank" class="btn btn-secondary">
-                    Get API Key
-                </a>
-            </div>
-        </div>
-    `;
-    
-    // ApiFlash (Premium)
-    html += `
-        <div class="service-card">
-            <div class="service-header">
-                <div class="service-icon">⚡</div>
-                <div class="service-name">ApiFlash</div>
-            </div>
-            <div class="service-badge premium">API Key Required</div>
-            <div class="service-description">
-                Fast and reliable screenshot API powered by Chrome. Offers many customization options.
-            </div>
-            <div class="action-buttons">
-                <a href="https://apiflash.com" target="_blank" class="btn btn-secondary">
-                    Get API Key
-                </a>
-            </div>
-        </div>
-    `;
-    
-    html += '</div>';
-    
-    // Quick Preview Section
-    html += `
-        <div class="info-section">
-            <h3>👁️ Quick Preview</h3>
-            <p>Loading a free preview from Thum.io...</p>
-            <div class="screenshot-preview">
-                <img src="${urls.thum_io}" alt="Website Screenshot" 
-                     onload="this.parentElement.style.minHeight = 'auto'"
-                     onerror="this.parentElement.innerHTML='<div class=screenshot-loading>Failed to load screenshot</div>'">
-            </div>
-        </div>
-    `;
-    
-    // API Comparison
-    html += `
-        <div class="api-comparison">
-            <h3 style="color: #333; margin-bottom: 15px;">📊 Service Comparison</h3>
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Service</th>
-                        <th>Price</th>
-                        <th>Quality</th>
-                        <th>Speed</th>
-                        <th>API Key</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Thum.io</td>
-                        <td>Free</td>
-                        <td>Medium</td>
-                        <td>Fast</td>
-                        <td>No</td>
-                    </tr>
-                    <tr>
-                        <td>ScreenshotAPI</td>
-                        <td>Free Tier</td>
-                        <td>Good</td>
-                        <td>Fast</td>
-                        <td>No (for free tier)</td>
-                    </tr>
-                    <tr>
-                        <td>Screenshot Machine</td>
-                        <td>Paid</td>
-                        <td>High</td>
-                        <td>Very Fast</td>
-                        <td>Yes</td>
-                    </tr>
-                    <tr>
-                        <td>ApiFlash</td>
-                        <td>Paid</td>
-                        <td>Excellent</td>
-                        <td>Very Fast</td>
-                        <td>Yes</td>
-                    </tr>
-                    <tr>
-                        <td>Google PageSpeed</td>
-                        <td>Free</td>
-                        <td>High</td>
-                        <td>Slow</td>
-                        <td>Yes</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    `;
-    
-    // Info Section
-    html += `
-        <div class="info-section" style="margin-top: 30px;">
-            <h3>💡 Screenshot Tips</h3>
-            <ul>
-                <li>Free services may have rate limits and lower quality</li>
-                <li>Premium services offer better quality and customization (viewport size, full page, etc.)</li>
-                <li>Some services cache screenshots for faster repeated requests</li>
-                <li>For production use, consider getting an API key for reliable service</li>
-                <li>Screenshots may take a few seconds to generate, especially for large pages</li>
-            </ul>
-        </div>
-    `;
-    
-    html += '</div>';
     
     resultsContainer.innerHTML = html;
+    
+    // Load screenshots
+    services.forEach(service => {
+        loadScreenshot(service.key, urls[service.key]);
+    });
+}
+
+function loadScreenshot(serviceKey, url) {
+    const container = document.getElementById(`preview-${serviceKey}`);
+    if (!container) return;
+    
+    const img = new Image();
+    
+    img.onload = function() {
+        container.innerHTML = `<img src="${url}" alt="Screenshot">`;
+    };
+    
+    img.onerror = function() {
+        container.innerHTML = `
+            <div class="screenshot-loading">
+                <p>❌ Failed to load screenshot from this service</p>
+                <p style="font-size: 14px; margin-top: 10px;">
+                    <a href="${url}" target="_blank" style="color: #0066cc;">Try opening in new tab →</a>
+                </p>
+            </div>
+        `;
+    };
+    
+    img.src = url;
+}
+
+function switchPreview(serviceKey, button) {
+    // Hide all previews
+    const previews = document.querySelectorAll('[id^="preview-"]');
+    previews.forEach(preview => {
+        preview.style.display = 'none';
+    });
+    
+    // Show selected preview
+    const selectedPreview = document.getElementById(`preview-${serviceKey}`);
+    if (selectedPreview) {
+        selectedPreview.style.display = 'flex';
+    }
+    
+    // Update active button
+    const buttons = document.querySelectorAll('.tab-button');
+    buttons.forEach(btn => {
+        btn.classList.remove('active');
+    });
+    button.classList.add('active');
 }
 
 function displayError(message) {
