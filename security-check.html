@@ -1,0 +1,456 @@
+---
+layout: page
+title: Security & Safety Check
+---
+
+<style>
+.security-tool {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.security-search-box {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.security-search-box h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.security-search-box p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.search-form {
+    display: flex;
+    gap: 10px;
+}
+
+.search-input {
+    flex: 1;
+    padding: 12px 16px;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    transition: border-color 0.3s;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #0066cc;
+}
+
+.search-button {
+    padding: 12px 30px;
+    font-size: 16px;
+    font-weight: 600;
+    background: #0066cc;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.search-button:hover {
+    background: #0052a3;
+}
+
+.search-button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.loading {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+}
+
+.spinner {
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #0066cc;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 15px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.result-box {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.security-status {
+    text-align: center;
+    padding: 40px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+}
+
+.security-status.safe {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    color: white;
+}
+
+.security-status.warning {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+}
+
+.security-status.danger {
+    background: linear-gradient(135deg, #ee0979 0%, #ff6a00 100%);
+    color: white;
+}
+
+.security-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+}
+
+.security-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.security-subtitle {
+    font-size: 18px;
+    opacity: 0.9;
+}
+
+.check-section {
+    margin: 30px 0;
+    padding: 25px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    border-left: 4px solid #0066cc;
+}
+
+.check-section h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.check-result {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 15px 0;
+}
+
+.check-icon {
+    font-size: 32px;
+}
+
+.check-content {
+    flex: 1;
+}
+
+.check-content h4 {
+    margin: 0 0 5px 0;
+    color: #333;
+}
+
+.check-content p {
+    margin: 0;
+    color: #666;
+}
+
+.blacklist-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.blacklist-table th,
+.blacklist-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.blacklist-table th {
+    background: #e9ecef;
+    font-weight: 600;
+    color: #333;
+}
+
+.blacklist-table tr:hover {
+    background: #f8f9fa;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.status-clean {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-listed {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.info-box {
+    background: #e7f3ff;
+    border-left: 4px solid #2196f3;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.info-box strong {
+    color: #1976d2;
+}
+
+.error-box {
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 8px;
+    padding: 20px;
+    color: #721c24;
+}
+
+.error-box h3 {
+    margin-top: 0;
+    color: #721c24;
+}
+
+@media (max-width: 768px) {
+    .search-form {
+        flex-direction: column;
+    }
+    
+    .security-icon {
+        font-size: 48px;
+    }
+    
+    .security-title {
+        font-size: 24px;
+    }
+}
+</style>
+
+<div class="security-tool">
+    <div class="security-search-box">
+        <h2>🔒 Security & Safety Check</h2>
+        <p>Check domain security status including Google Safe Browsing and blacklist databases.</p>
+        
+        <form class="search-form" id="securityForm">
+            <input 
+                type="text" 
+                class="search-input" 
+                id="domainInput" 
+                placeholder="Enter domain name (e.g., example.com)"
+                required
+            >
+            <button type="submit" class="search-button" id="searchButton">
+                Check Security
+            </button>
+        </form>
+    </div>
+    
+    <div id="resultsContainer"></div>
+</div>
+
+<script>
+const SAFE_BROWSING_API = 'https://tools.webc.com.tr/safe-browsing-api.php';
+const BLACKLIST_API = 'https://tools.webc.com.tr/blacklist-check-api.php';
+
+const form = document.getElementById('securityForm');
+const input = document.getElementById('domainInput');
+const button = document.getElementById('searchButton');
+const resultsContainer = document.getElementById('resultsContainer');
+
+form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const domain = input.value.trim();
+    if (domain) {
+        performSecurityCheck(domain);
+    }
+});
+
+async function performSecurityCheck(domain) {
+    button.disabled = true;
+    button.textContent = 'Checking...';
+    
+    resultsContainer.innerHTML = `
+        <div class="loading">
+            <div class="spinner"></div>
+            <p>Running security checks...</p>
+        </div>
+    `;
+    
+    try {
+        const [safeBrowsing, blacklist] = await Promise.all([
+            fetch(`${SAFE_BROWSING_API}?domain=${encodeURIComponent(domain)}`).then(r => r.json()),
+            fetch(`${BLACKLIST_API}?domain=${encodeURIComponent(domain)}`).then(r => r.json())
+        ]);
+        
+        displayResults(safeBrowsing, blacklist);
+    } catch (error) {
+        displayError(error.message);
+    } finally {
+        button.disabled = false;
+        button.textContent = 'Check Security';
+    }
+}
+
+function displayResults(safeBrowsing, blacklist) {
+    const isSafe = safeBrowsing.is_safe && blacklist.is_clean;
+    const hasWarnings = !safeBrowsing.is_safe || !blacklist.is_clean;
+    
+    let statusClass = 'safe';
+    let statusIcon = '✅';
+    let statusTitle = 'Secure';
+    let statusSubtitle = 'No security threats detected';
+    
+    if (!isSafe) {
+        statusClass = 'danger';
+        statusIcon = '⚠️';
+        statusTitle = 'Security Issues Found';
+        statusSubtitle = 'This domain has security concerns';
+    } else if (hasWarnings) {
+        statusClass = 'warning';
+        statusIcon = '⚠️';
+        statusTitle = 'Minor Issues';
+        statusSubtitle = 'Some security concerns detected';
+    }
+    
+    let html = `
+        <div class="result-box">
+            <div class="security-status ${statusClass}">
+                <div class="security-icon">${statusIcon}</div>
+                <div class="security-title">${statusTitle}</div>
+                <div class="security-subtitle">${statusSubtitle}</div>
+            </div>
+    `;
+    
+    // Google Safe Browsing Results
+    html += `
+        <div class="check-section">
+            <h3>🛡️ Google Safe Browsing</h3>
+            <div class="check-result">
+                <div class="check-icon">${safeBrowsing.is_safe ? '✅' : '❌'}</div>
+                <div class="check-content">
+                    <h4>${safeBrowsing.status}</h4>
+                    <p>${safeBrowsing.is_safe ? 
+                        'This site is not currently listed as suspicious by Google Safe Browsing.' :
+                        'This site has been flagged by Google Safe Browsing for potential security issues.'
+                    }</p>
+                </div>
+            </div>
+            
+            ${safeBrowsing.threats && safeBrowsing.threats.length > 0 ? `
+                <div style="margin-top: 15px;">
+                    <strong>⚠️ Threats Detected:</strong>
+                    <ul>
+                        ${safeBrowsing.threats.map(threat => `
+                            <li>Type: ${threat.threatType} - Platform: ${threat.platformType}</li>
+                        `).join('')}
+                    </ul>
+                </div>
+            ` : ''}
+        </div>
+    `;
+    
+    // Blacklist Check Results
+    html += `
+        <div class="check-section">
+            <h3>🚫 Blacklist Status</h3>
+            <div class="check-result">
+                <div class="check-icon">${blacklist.is_clean ? '✅' : '❌'}</div>
+                <div class="check-content">
+                    <h4>${blacklist.blacklist_status}</h4>
+                    <p>IP Address: ${blacklist.ip_address || 'N/A'}</p>
+                </div>
+            </div>
+            
+            ${blacklist.blacklist_checks ? `
+                <table class="blacklist-table">
+                    <thead>
+                        <tr>
+                            <th>Blacklist</th>
+                            <th>Status</th>
+                            <th>Response</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${Object.entries(blacklist.blacklist_checks).map(([name, data]) => `
+                            <tr>
+                                <td>${name}</td>
+                                <td>
+                                    <span class="status-badge ${data.listed ? 'status-listed' : 'status-clean'}">
+                                        ${data.listed ? '❌ Listed' : '✅ Clean'}
+                                    </span>
+                                </td>
+                                <td>${data.response}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            ` : ''}
+        </div>
+    `;
+    
+    // URLVoid Link
+    if (blacklist.urlvoid_check) {
+        html += `
+            <div class="info-box">
+                <strong>🔍 Additional Scanning:</strong>
+                <p>For more detailed security scanning, visit 
+                <a href="${blacklist.urlvoid_check.check_url}" target="_blank" rel="noopener">URLVoid</a>
+                for comprehensive multi-engine analysis.</p>
+            </div>
+        `;
+    }
+    
+    html += '</div>';
+    
+    resultsContainer.innerHTML = html;
+}
+
+function displayError(message) {
+    resultsContainer.innerHTML = `
+        <div class="error-box">
+            <h3>⚠️ Error</h3>
+            <p>${escapeHtml(message)}</p>
+            <p>Please check your domain name and try again.</p>
+        </div>
+    `;
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+</script>

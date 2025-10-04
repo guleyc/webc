@@ -1,0 +1,571 @@
+---
+layout: page
+title: Meta Tags & SEO Analysis
+---
+
+<style>
+.meta-tool {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.meta-search-box {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.meta-search-box h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.meta-search-box p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.search-form {
+    display: flex;
+    gap: 10px;
+}
+
+.search-input {
+    flex: 1;
+    padding: 12px 16px;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    transition: border-color 0.3s;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #0066cc;
+}
+
+.search-button {
+    padding: 12px 30px;
+    font-size: 16px;
+    font-weight: 600;
+    background: #0066cc;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.search-button:hover {
+    background: #0052a3;
+}
+
+.search-button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.loading {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+}
+
+.spinner {
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #0066cc;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 15px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.result-box {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.seo-score-display {
+    text-align: center;
+    padding: 40px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+}
+
+.seo-score-display.good {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+}
+
+.seo-score-display.medium {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.seo-score-display.poor {
+    background: linear-gradient(135deg, #ee0979 0%, #ff6a00 100%);
+}
+
+.score-circle {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.3);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.score-label {
+    font-size: 24px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.score-status {
+    font-size: 16px;
+    color: rgba(255,255,255,0.9);
+}
+
+.meta-section {
+    margin: 30px 0;
+    padding: 25px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    border-left: 4px solid #0066cc;
+}
+
+.meta-section h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.meta-item {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.meta-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.meta-label {
+    font-weight: 600;
+    color: #555;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+}
+
+.meta-value {
+    color: #333;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.meta-length {
+    display: inline-block;
+    margin-left: 10px;
+    padding: 4px 10px;
+    background: #e9ecef;
+    border-radius: 12px;
+    font-size: 13px;
+    color: #666;
+}
+
+.meta-length.good {
+    background: #d4edda;
+    color: #155724;
+}
+
+.meta-length.warning {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.meta-length.danger {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.issues-list {
+    margin: 20px 0;
+}
+
+.issue-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    border-left: 3px solid #ffc107;
+}
+
+.issue-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.issue-text {
+    color: #666;
+    line-height: 1.6;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.stat-card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: #0066cc;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    font-size: 13px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.error-box {
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 8px;
+    padding: 20px;
+    color: #721c24;
+}
+
+.error-box h3 {
+    margin-top: 0;
+    color: #721c24;
+}
+
+@media (max-width: 768px) {
+    .search-form {
+        flex-direction: column;
+    }
+    
+    .score-circle {
+        width: 100px;
+        height: 100px;
+        font-size: 36px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+</style>
+
+<div class="meta-tool">
+    <div class="meta-search-box">
+        <h2>🎯 Meta Tags & SEO Analysis</h2>
+        <p>Analyze meta tags, headings, images, and overall on-page SEO optimization.</p>
+        
+        <form class="search-form" id="metaForm">
+            <input 
+                type="text" 
+                class="search-input" 
+                id="domainInput" 
+                placeholder="Enter domain name (e.g., example.com)"
+                required
+            >
+            <button type="submit" class="search-button" id="searchButton">
+                Analyze SEO
+            </button>
+        </form>
+    </div>
+    
+    <div id="resultsContainer"></div>
+</div>
+
+<script>
+const API_ENDPOINT = 'https://tools.webc.com.tr/meta-tags-api.php';
+
+const form = document.getElementById('metaForm');
+const input = document.getElementById('domainInput');
+const button = document.getElementById('searchButton');
+const resultsContainer = document.getElementById('resultsContainer');
+
+form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const domain = input.value.trim();
+    if (domain) {
+        performAnalysis(domain);
+    }
+});
+
+function performAnalysis(domain) {
+    button.disabled = true;
+    button.textContent = 'Analyzing...';
+    
+    resultsContainer.innerHTML = `
+        <div class="loading">
+            <div class="spinner"></div>
+            <p>Analyzing SEO and meta tags...</p>
+        </div>
+    `;
+    
+    fetch(`${API_ENDPOINT}?domain=${encodeURIComponent(domain)}`)
+        .then(response => response.json())
+        .then(data => {
+            displayResults(data);
+        })
+        .catch(error => {
+            displayError(error.message);
+        })
+        .finally(() => {
+            button.disabled = false;
+            button.textContent = 'Analyze SEO';
+        });
+}
+
+function displayResults(data) {
+    if (!data.success) {
+        displayError(data.message || 'An error occurred during analysis.');
+        return;
+    }
+    
+    const analysis = data.seo_analysis;
+    const metaTags = data.meta_tags;
+    
+    let scoreClass = 'good';
+    if (analysis.score < 60) scoreClass = 'poor';
+    else if (analysis.score < 80) scoreClass = 'medium';
+    
+    let html = `
+        <div class="result-box">
+            <div class="seo-score-display ${scoreClass}">
+                <div class="score-circle">${analysis.score}</div>
+                <div class="score-label">SEO Score</div>
+                <div class="score-status">${analysis.status}</div>
+            </div>
+    `;
+    
+    // Issues
+    if (analysis.issues && analysis.issues.length > 0) {
+        html += `
+            <div class="meta-section">
+                <h3>⚠️ Issues Found (${analysis.issues.length})</h3>
+                <div class="issues-list">
+                    ${analysis.issues.map(issue => `
+                        <div class="issue-item">
+                            <div class="issue-icon">⚠️</div>
+                            <div class="issue-text">${escapeHtml(issue)}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    } else {
+        html += `
+            <div class="meta-section">
+                <h3>✅ No Major Issues Found</h3>
+                <p style="color: #666;">Your website's SEO looks good!</p>
+            </div>
+        `;
+    }
+    
+    // Title Tag
+    html += `
+        <div class="meta-section">
+            <h3>📄 Title Tag</h3>
+            <div class="meta-item">
+                <div class="meta-value">
+                    ${escapeHtml(metaTags.title || 'No title found')}
+                    ${getTitleLengthBadge(metaTags.title_length)}
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Meta Description
+    html += `
+        <div class="meta-section">
+            <h3>📝 Meta Description</h3>
+            <div class="meta-item">
+                <div class="meta-value">
+                    ${escapeHtml(metaTags.meta?.description || 'No description found')}
+                    ${getDescriptionLengthBadge(metaTags.meta?.description)}
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Headings
+    if (metaTags.headings) {
+        html += `
+            <div class="meta-section">
+                <h3>📊 Heading Tags</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">${metaTags.headings.h1 || 0}</div>
+                        <div class="stat-label">H1 Tags</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">${metaTags.headings.h2 || 0}</div>
+                        <div class="stat-label">H2 Tags</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">${metaTags.headings.h3 || 0}</div>
+                        <div class="stat-label">H3 Tags</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">${metaTags.headings.h4 || 0}</div>
+                        <div class="stat-label">H4 Tags</div>
+                    </div>
+                </div>
+                ${metaTags.first_h1 ? `
+                    <div class="meta-item">
+                        <div class="meta-label">First H1:</div>
+                        <div class="meta-value">${escapeHtml(metaTags.first_h1)}</div>
+                    </div>
+                ` : ''}
+            </div>
+        `;
+    }
+    
+    // Images
+    if (metaTags.images) {
+        html += `
+            <div class="meta-section">
+                <h3>🖼️ Images</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">${metaTags.images.total || 0}</div>
+                        <div class="stat-label">Total Images</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: ${metaTags.images.without_alt > 0 ? '#dc3545' : '#28a745'}">
+                            ${metaTags.images.without_alt || 0}
+                        </div>
+                        <div class="stat-label">Without Alt</div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+    
+    // Links
+    if (metaTags.links) {
+        html += `
+            <div class="meta-section">
+                <h3>🔗 Links</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">${metaTags.links.total || 0}</div>
+                        <div class="stat-label">Total Links</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">${metaTags.links.internal || 0}</div>
+                        <div class="stat-label">Internal</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">${metaTags.links.external || 0}</div>
+                        <div class="stat-label">External</div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+    
+    // Open Graph Tags
+    if (metaTags.meta) {
+        const ogTags = Object.entries(metaTags.meta)
+            .filter(([key]) => key.startsWith('og:') || key.startsWith('twitter:'));
+        
+        if (ogTags.length > 0) {
+            html += `
+                <div class="meta-section">
+                    <h3>🌐 Social Media Tags</h3>
+            `;
+            
+            ogTags.forEach(([key, value]) => {
+                html += `
+                    <div class="meta-item">
+                        <div class="meta-label">${escapeHtml(key)}</div>
+                        <div class="meta-value">${escapeHtml(value)}</div>
+                    </div>
+                `;
+            });
+            
+            html += '</div>';
+        }
+    }
+    
+    html += '</div>';
+    
+    resultsContainer.innerHTML = html;
+}
+
+function getTitleLengthBadge(length) {
+    if (!length) return '<span class="meta-length danger">0 chars</span>';
+    
+    let className = 'good';
+    if (length < 30 || length > 60) className = 'warning';
+    if (length < 10 || length > 70) className = 'danger';
+    
+    return `<span class="meta-length ${className}">${length} chars</span>`;
+}
+
+function getDescriptionLengthBadge(description) {
+    if (!description) return '<span class="meta-length danger">0 chars</span>';
+    
+    const length = description.length;
+    let className = 'good';
+    if (length < 120 || length > 160) className = 'warning';
+    if (length < 70 || length > 200) className = 'danger';
+    
+    return `<span class="meta-length ${className}">${length} chars</span>`;
+}
+
+function displayError(message) {
+    resultsContainer.innerHTML = `
+        <div class="error-box">
+            <h3>⚠️ Error</h3>
+            <p>${escapeHtml(message)}</p>
+            <p>Please check your domain name and try again.</p>
+        </div>
+    `;
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+</script>

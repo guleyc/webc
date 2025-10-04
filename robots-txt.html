@@ -1,0 +1,697 @@
+---
+layout: page
+title: Robots.txt Analysis
+---
+
+<style>
+.robots-tool {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.robots-search-box {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.robots-search-box h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.robots-search-box p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.search-form {
+    display: flex;
+    gap: 10px;
+}
+
+.search-input {
+    flex: 1;
+    padding: 12px 16px;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    transition: border-color 0.3s;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #0066cc;
+}
+
+.search-button {
+    padding: 12px 30px;
+    font-size: 16px;
+    font-weight: 600;
+    background: #0066cc;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.search-button:hover {
+    background: #0052a3;
+}
+
+.search-button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.loading {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+}
+
+.spinner {
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #0066cc;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 15px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.result-box {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.robots-status {
+    text-align: center;
+    padding: 40px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+}
+
+.robots-status.found {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.robots-status.not-found {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+}
+
+.robots-status.blocked {
+    background: linear-gradient(135deg, #ee0979 0%, #ff6a00 100%);
+    color: white;
+}
+
+.status-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+}
+
+.status-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.status-subtitle {
+    font-size: 18px;
+    opacity: 0.9;
+}
+
+.score-display {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.3);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    font-weight: 700;
+    margin: 20px 0;
+}
+
+.robots-content {
+    margin: 30px 0;
+    padding: 25px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    border-left: 4px solid #0066cc;
+}
+
+.robots-content h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.robots-raw {
+    background: #1e1e1e;
+    color: #d4d4d4;
+    border-radius: 8px;
+    padding: 20px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.rules-section {
+    margin: 30px 0;
+}
+
+.agent-card {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-left: 4px solid #0066cc;
+}
+
+.agent-card h4 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #333;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.agent-name {
+    font-family: 'Courier New', monospace;
+    background: #e9ecef;
+    padding: 4px 10px;
+    border-radius: 6px;
+}
+
+.rule-list {
+    margin: 15px 0;
+}
+
+.rule-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px;
+    background: white;
+    border-radius: 6px;
+    margin-bottom: 8px;
+}
+
+.rule-type {
+    font-weight: 600;
+    color: #555;
+    min-width: 80px;
+}
+
+.rule-type.allow {
+    color: #28a745;
+}
+
+.rule-type.disallow {
+    color: #dc3545;
+}
+
+.rule-path {
+    font-family: 'Courier New', monospace;
+    color: #666;
+    word-break: break-all;
+}
+
+.sitemap-list {
+    margin: 15px 0;
+}
+
+.sitemap-link {
+    display: block;
+    padding: 12px;
+    background: white;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    color: #0066cc;
+    text-decoration: none;
+    word-break: break-all;
+}
+
+.sitemap-link:hover {
+    background: #e7f3ff;
+}
+
+.analysis-section {
+    margin: 30px 0;
+    padding: 25px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    border-left: 4px solid #0066cc;
+}
+
+.analysis-section h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.issue-list {
+    margin: 15px 0;
+}
+
+.issue-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    border-left: 3px solid #ffc107;
+}
+
+.issue-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.issue-text {
+    color: #666;
+    line-height: 1.6;
+}
+
+.no-issues {
+    padding: 15px;
+    background: #d4edda;
+    color: #155724;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.info-card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.info-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: #0066cc;
+    margin-bottom: 5px;
+}
+
+.info-label {
+    font-size: 13px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.recommendations {
+    margin-top: 30px;
+    padding: 25px;
+    background: #e7f3ff;
+    border-left: 4px solid #2196f3;
+    border-radius: 8px;
+}
+
+.recommendations h3 {
+    margin-top: 0;
+    color: #1976d2;
+}
+
+.recommendations ul {
+    margin: 15px 0;
+    padding-left: 25px;
+}
+
+.recommendations li {
+    margin: 10px 0;
+    color: #555;
+    line-height: 1.6;
+}
+
+.error-box {
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 8px;
+    padding: 20px;
+    color: #721c24;
+}
+
+.error-box h3 {
+    margin-top: 0;
+    color: #721c24;
+}
+
+@media (max-width: 768px) {
+    .search-form {
+        flex-direction: column;
+    }
+    
+    .status-icon {
+        font-size: 48px;
+    }
+    
+    .status-title {
+        font-size: 24px;
+    }
+    
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+<div class="robots-tool">
+    <div class="robots-search-box">
+        <h2>🤖 Robots.txt Analysis</h2>
+        <p>Analyze your website's robots.txt file and check crawler access rules.</p>
+        
+        <form class="search-form" id="robotsForm">
+            <input 
+                type="text" 
+                class="search-input" 
+                id="domainInput" 
+                placeholder="Enter domain name (e.g., example.com)"
+                required
+            >
+            <button type="submit" class="search-button" id="searchButton">
+                Analyze Robots.txt
+            </button>
+        </form>
+    </div>
+    
+    <div id="resultsContainer"></div>
+</div>
+
+<script>
+const API_ENDPOINT = 'https://tools.webc.com.tr/robots-txt-api.php';
+
+const form = document.getElementById('robotsForm');
+const input = document.getElementById('domainInput');
+const button = document.getElementById('searchButton');
+const resultsContainer = document.getElementById('resultsContainer');
+
+form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const domain = input.value.trim();
+    if (domain) {
+        performAnalysis(domain);
+    }
+});
+
+function performAnalysis(domain) {
+    button.disabled = true;
+    button.textContent = 'Analyzing...';
+    
+    resultsContainer.innerHTML = `
+        <div class="loading">
+            <div class="spinner"></div>
+            <p>Analyzing robots.txt...</p>
+        </div>
+    `;
+    
+    fetch(`${API_ENDPOINT}?domain=${encodeURIComponent(domain)}`)
+        .then(response => response.json())
+        .then(data => {
+            displayResults(data);
+        })
+        .catch(error => {
+            displayError(error.message);
+        })
+        .finally(() => {
+            button.disabled = false;
+            button.textContent = 'Analyze Robots.txt';
+        });
+}
+
+function displayResults(data) {
+    if (!data.success || !data.exists) {
+        displayNotFound(data);
+        return;
+    }
+    
+    const analysis = data.analysis;
+    const parsed = data.parsed;
+    
+    let statusClass = 'found';
+    let statusIcon = '✅';
+    let statusTitle = 'Robots.txt Found';
+    
+    // Check if entire site is blocked
+    if (parsed.rules && parsed.rules['*'] && 
+        parsed.rules['*'].disallow && 
+        parsed.rules['*'].disallow.includes('/')) {
+        statusClass = 'blocked';
+        statusIcon = '⚠️';
+        statusTitle = 'Site Blocked!';
+    }
+    
+    let html = `
+        <div class="result-box">
+            <div class="robots-status ${statusClass}">
+                <div class="status-icon">${statusIcon}</div>
+                <div class="status-title">${statusTitle}</div>
+                <div class="status-subtitle">${data.url}</div>
+                ${analysis ? `
+                    <div class="score-display">${analysis.score}</div>
+                    <div style="margin-top: 10px; font-size: 16px;">
+                        Status: ${analysis.status}
+                    </div>
+                ` : ''}
+            </div>
+    `;
+    
+    // File info
+    html += `
+        <div class="info-grid">
+            <div class="info-card">
+                <div class="info-value">${data.size}</div>
+                <div class="info-label">File Size</div>
+            </div>
+            <div class="info-card">
+                <div class="info-value">${Object.keys(parsed.rules || {}).length}</div>
+                <div class="info-label">User Agents</div>
+            </div>
+            <div class="info-card">
+                <div class="info-value">${(parsed.sitemaps || []).length}</div>
+                <div class="info-label">Sitemaps</div>
+            </div>
+        </div>
+    `;
+    
+    // Raw content
+    html += `
+        <div class="robots-content">
+            <h3>📄 Raw Content</h3>
+            <div class="robots-raw">${escapeHtml(data.content)}</div>
+        </div>
+    `;
+    
+    // User-Agent Rules
+    if (parsed.rules && Object.keys(parsed.rules).length > 0) {
+        html += `
+            <div class="rules-section">
+                <h3 style="margin-bottom: 20px; color: #333;">🤖 User-Agent Rules</h3>
+        `;
+        
+        for (const [agent, rules] of Object.entries(parsed.rules)) {
+            html += `
+                <div class="agent-card">
+                    <h4>
+                        🤖 User-Agent: <span class="agent-name">${escapeHtml(agent)}</span>
+                    </h4>
+            `;
+            
+            if (rules.disallow && rules.disallow.length > 0) {
+                html += `
+                    <div class="rule-list">
+                        <strong style="color: #333; display: block; margin-bottom: 10px;">Disallowed Paths:</strong>
+                `;
+                
+                rules.disallow.forEach(path => {
+                    html += `
+                        <div class="rule-item">
+                            <div class="rule-type disallow">Disallow:</div>
+                            <div class="rule-path">${escapeHtml(path)}</div>
+                        </div>
+                    `;
+                });
+                
+                html += '</div>';
+            }
+            
+            if (rules.allow && rules.allow.length > 0) {
+                html += `
+                    <div class="rule-list">
+                        <strong style="color: #333; display: block; margin-bottom: 10px;">Allowed Paths:</strong>
+                `;
+                
+                rules.allow.forEach(path => {
+                    html += `
+                        <div class="rule-item">
+                            <div class="rule-type allow">Allow:</div>
+                            <div class="rule-path">${escapeHtml(path)}</div>
+                        </div>
+                    `;
+                });
+                
+                html += '</div>';
+            }
+            
+            if (rules.crawl_delay) {
+                html += `
+                    <div class="rule-item">
+                        <div class="rule-type">Crawl-delay:</div>
+                        <div class="rule-path">${rules.crawl_delay} seconds</div>
+                    </div>
+                `;
+            }
+            
+            html += '</div>';
+        }
+        
+        html += '</div>';
+    }
+    
+    // Sitemaps
+    if (parsed.sitemaps && parsed.sitemaps.length > 0) {
+        html += `
+            <div class="robots-content">
+                <h3>🗺️ Sitemaps Referenced</h3>
+                <div class="sitemap-list">
+                    ${parsed.sitemaps.map(sitemap => `
+                        <a href="${escapeHtml(sitemap)}" target="_blank" class="sitemap-link">
+                            📄 ${escapeHtml(sitemap)}
+                        </a>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
+    
+    // Analysis & Issues
+    if (analysis) {
+        html += `
+            <div class="analysis-section">
+                <h3>📊 Analysis Results</h3>
+        `;
+        
+        if (analysis.issues && analysis.issues.length > 0) {
+            html += `
+                <div class="issue-list">
+                    ${analysis.issues.map(issue => `
+                        <div class="issue-item">
+                            <div class="issue-icon">⚠️</div>
+                            <div class="issue-text">${escapeHtml(issue)}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        } else {
+            html += `
+                <div class="no-issues">
+                    ✅ No major issues found in your robots.txt file!
+                </div>
+            `;
+        }
+        
+        html += '</div>';
+    }
+    
+    // Recommendations
+    html += `
+        <div class="recommendations">
+            <h3>💡 Best Practices</h3>
+            <ul>
+                <li>Make sure your robots.txt is accessible at the root of your domain</li>
+                <li>Include references to your XML sitemaps</li>
+                <li>Be careful with wildcard (*) user-agent rules</li>
+                <li>Don't block important resources like CSS and JavaScript</li>
+                <li>Test your robots.txt with Google Search Console's robots.txt Tester</li>
+                <li>Use "Disallow: " (with trailing space) sparingly - it blocks the entire site!</li>
+            </ul>
+        </div>
+    `;
+    
+    html += '</div>';
+    
+    resultsContainer.innerHTML = html;
+}
+
+function displayNotFound(data) {
+    let html = `
+        <div class="result-box">
+            <div class="robots-status not-found">
+                <div class="status-icon">❌</div>
+                <div class="status-title">Robots.txt Not Found</div>
+                <div class="status-subtitle">This domain doesn't have a robots.txt file</div>
+            </div>
+            
+            <div class="recommendations">
+                <h3>💡 Why You Need a Robots.txt File</h3>
+                <p>A robots.txt file helps search engines understand which parts of your site they can crawl. Here's what you should do:</p>
+                <ul>
+                    <li>Create a robots.txt file at the root of your domain</li>
+                    <li>Add basic rules for crawlers (even if you allow everything)</li>
+                    <li>Include references to your XML sitemaps</li>
+                    <li>Specify crawl-delay if needed for rate limiting</li>
+                </ul>
+                
+                <h4 style="margin-top: 20px;">Example robots.txt:</h4>
+                <div class="robots-raw" style="margin-top: 10px;">User-agent: *
+Disallow: /admin/
+Disallow: /private/
+Allow: /
+
+Sitemap: https://example.com/sitemap.xml</div>
+            </div>
+        </div>
+    `;
+    
+    resultsContainer.innerHTML = html;
+}
+
+function displayError(message) {
+    resultsContainer.innerHTML = `
+        <div class="error-box">
+            <h3>⚠️ Error</h3>
+            <p>${escapeHtml(message)}</p>
+            <p>Please check your domain name and try again.</p>
+        </div>
+    `;
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+</script>

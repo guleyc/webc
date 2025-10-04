@@ -1,0 +1,516 @@
+---
+layout: page
+title: Mobile-Friendly Test
+---
+
+<style>
+.mobile-tool {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.mobile-search-box {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.mobile-search-box h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.mobile-search-box p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.search-form {
+    display: flex;
+    gap: 10px;
+}
+
+.search-input {
+    flex: 1;
+    padding: 12px 16px;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    transition: border-color 0.3s;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #0066cc;
+}
+
+.search-button {
+    padding: 12px 30px;
+    font-size: 16px;
+    font-weight: 600;
+    background: #0066cc;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.search-button:hover {
+    background: #0052a3;
+}
+
+.search-button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.loading {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+}
+
+.spinner {
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #0066cc;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 15px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.result-box {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.mobile-status {
+    text-align: center;
+    padding: 50px 30px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+}
+
+.mobile-status.friendly {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.mobile-status.not-friendly {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+}
+
+.mobile-icon {
+    font-size: 80px;
+    margin-bottom: 20px;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.mobile-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.mobile-subtitle {
+    font-size: 18px;
+    opacity: 0.9;
+}
+
+.device-preview {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 30px 0;
+    flex-wrap: wrap;
+}
+
+.device-card {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 25px;
+    text-align: center;
+    flex: 1;
+    min-width: 200px;
+    max-width: 250px;
+    border: 2px solid #e0e0e0;
+    transition: all 0.3s;
+}
+
+.device-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.device-icon {
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+
+.device-name {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.device-status {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.device-status.compatible {
+    background: #d4edda;
+    color: #155724;
+}
+
+.device-status.issue {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.check-section {
+    margin: 30px 0;
+    padding: 25px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    border-left: 4px solid #0066cc;
+}
+
+.check-section h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.check-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+
+.check-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.check-content {
+    flex: 1;
+}
+
+.check-label {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.check-description {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.recommendations {
+    margin-top: 30px;
+    padding: 25px;
+    background: #e7f3ff;
+    border-left: 4px solid #2196f3;
+    border-radius: 8px;
+}
+
+.recommendations h3 {
+    margin-top: 0;
+    color: #1976d2;
+}
+
+.recommendations ul {
+    margin: 15px 0;
+    padding-left: 25px;
+}
+
+.recommendations li {
+    margin: 10px 0;
+    color: #555;
+    line-height: 1.6;
+}
+
+.error-box {
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 8px;
+    padding: 20px;
+    color: #721c24;
+}
+
+.error-box h3 {
+    margin-top: 0;
+    color: #721c24;
+}
+
+@media (max-width: 768px) {
+    .search-form {
+        flex-direction: column;
+    }
+    
+    .mobile-icon {
+        font-size: 60px;
+    }
+    
+    .mobile-title {
+        font-size: 24px;
+    }
+    
+    .device-preview {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .device-card {
+        max-width: 100%;
+    }
+}
+</style>
+
+<div class="mobile-tool">
+    <div class="mobile-search-box">
+        <h2>📱 Mobile-Friendly Test</h2>
+        <p>Check if your website is optimized for mobile devices and responsive design.</p>
+        
+        <form class="search-form" id="mobileForm">
+            <input 
+                type="text" 
+                class="search-input" 
+                id="domainInput" 
+                placeholder="Enter domain name (e.g., example.com)"
+                required
+            >
+            <button type="submit" class="search-button" id="searchButton">
+                Test Mobile Compatibility
+            </button>
+        </form>
+    </div>
+    
+    <div id="resultsContainer"></div>
+</div>
+
+<script>
+const API_ENDPOINT = 'https://tools.webc.com.tr/mobile-friendly-api.php';
+
+const form = document.getElementById('mobileForm');
+const input = document.getElementById('domainInput');
+const button = document.getElementById('searchButton');
+const resultsContainer = document.getElementById('resultsContainer');
+
+form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const domain = input.value.trim();
+    if (domain) {
+        performTest(domain);
+    }
+});
+
+function performTest(domain) {
+    button.disabled = true;
+    button.textContent = 'Testing...';
+    
+    resultsContainer.innerHTML = `
+        <div class="loading">
+            <div class="spinner"></div>
+            <p>Testing mobile compatibility...</p>
+        </div>
+    `;
+    
+    fetch(`${API_ENDPOINT}?domain=${encodeURIComponent(domain)}`)
+        .then(response => response.json())
+        .then(data => {
+            displayResults(data);
+        })
+        .catch(error => {
+            displayError(error.message);
+        })
+        .finally(() => {
+            button.disabled = false;
+            button.textContent = 'Test Mobile Compatibility';
+        });
+}
+
+function displayResults(data) {
+    if (!data.success) {
+        displayError(data.message || 'An error occurred during testing.');
+        return;
+    }
+    
+    const basicCheck = data.basic_check || {};
+    const isMobileFriendly = data.is_mobile_friendly || basicCheck.likely_mobile_friendly;
+    
+    let html = `
+        <div class="result-box">
+            <div class="mobile-status ${isMobileFriendly ? 'friendly' : 'not-friendly'}">
+                <div class="mobile-icon">${isMobileFriendly ? '📱✅' : '📱⚠️'}</div>
+                <div class="mobile-title">
+                    ${isMobileFriendly ? 'Mobile-Friendly' : 'Not Optimized'}
+                </div>
+                <div class="mobile-subtitle">
+                    ${isMobileFriendly ? 
+                        'This page is usable on mobile devices' : 
+                        'This page may have mobile usability issues'}
+                </div>
+            </div>
+            
+            <div class="device-preview">
+                <div class="device-card">
+                    <div class="device-icon">📱</div>
+                    <div class="device-name">Mobile Phone</div>
+                    <div class="device-status ${isMobileFriendly ? 'compatible' : 'issue'}">
+                        ${isMobileFriendly ? '✓ Compatible' : '⚠ Issues Found'}
+                    </div>
+                </div>
+                
+                <div class="device-card">
+                    <div class="device-icon">📱</div>
+                    <div class="device-name">Tablet</div>
+                    <div class="device-status ${isMobileFriendly ? 'compatible' : 'issue'}">
+                        ${isMobileFriendly ? '✓ Compatible' : '⚠ Issues Found'}
+                    </div>
+                </div>
+                
+                <div class="device-card">
+                    <div class="device-icon">💻</div>
+                    <div class="device-name">Desktop</div>
+                    <div class="device-status compatible">
+                        ✓ Compatible
+                    </div>
+                </div>
+            </div>
+    `;
+    
+    // Basic checks
+    html += `
+        <div class="check-section">
+            <h3>✓ Mobile Compatibility Checks</h3>
+            
+            <div class="check-item">
+                <div class="check-icon">${basicCheck.has_viewport_meta ? '✅' : '❌'}</div>
+                <div class="check-content">
+                    <div class="check-label">Viewport Meta Tag</div>
+                    <div class="check-description">
+                        ${basicCheck.has_viewport_meta ? 
+                            'Your page has a viewport meta tag, which is essential for mobile responsiveness.' :
+                            'Your page is missing a viewport meta tag. Add &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt; to your HTML.'}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="check-item">
+                <div class="check-icon">${basicCheck.has_responsive_meta ? '✅' : '❌'}</div>
+                <div class="check-content">
+                    <div class="check-label">Responsive Width Configuration</div>
+                    <div class="check-description">
+                        ${basicCheck.has_responsive_meta ? 
+                            'Your viewport is configured to adapt to device width.' :
+                            'Your viewport configuration may need adjustment for proper responsive behavior.'}
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Google Mobile-Friendly Test Results
+    if (data.google_mobile_friendly_test) {
+        const googleTest = data.google_mobile_friendly_test;
+        html += `
+            <div class="check-section">
+                <h3>🔍 Google Mobile-Friendly Test</h3>
+                <p style="color: #666; margin-bottom: 15px;">
+                    Detailed analysis from Google's Mobile-Friendly Testing Tool.
+                </p>
+                <pre style="background: white; padding: 15px; border-radius: 8px; overflow-x: auto; font-size: 13px;">
+${JSON.stringify(googleTest, null, 2)}
+                </pre>
+            </div>
+        `;
+    }
+    
+    // Recommendations
+    const recommendations = [];
+    if (!basicCheck.has_viewport_meta) {
+        recommendations.push('Add a viewport meta tag to your HTML');
+    }
+    if (!basicCheck.has_responsive_meta) {
+        recommendations.push('Configure viewport with device-width for responsive design');
+    }
+    if (!isMobileFriendly) {
+        recommendations.push('Use responsive CSS frameworks like Bootstrap or Tailwind CSS');
+        recommendations.push('Test your site on various mobile devices');
+        recommendations.push('Ensure text is readable without zooming');
+        recommendations.push('Make clickable elements appropriately sized for touch');
+        recommendations.push('Avoid horizontal scrolling');
+    }
+    
+    if (recommendations.length > 0) {
+        html += `
+            <div class="recommendations">
+                <h3>💡 Recommendations</h3>
+                <ul>
+                    ${recommendations.map(rec => `<li>${rec}</li>`).join('')}
+                </ul>
+            </div>
+        `;
+    } else {
+        html += `
+            <div class="recommendations">
+                <h3>✨ Great Job!</h3>
+                <p>Your website appears to be well-optimized for mobile devices. Keep up the good work!</p>
+            </div>
+        `;
+    }
+    
+    html += '</div>';
+    
+    resultsContainer.innerHTML = html;
+}
+
+function displayError(message) {
+    resultsContainer.innerHTML = `
+        <div class="error-box">
+            <h3>⚠️ Error</h3>
+            <p>${escapeHtml(message)}</p>
+            <p>Please check your domain name and try again.</p>
+        </div>
+    `;
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+</script>

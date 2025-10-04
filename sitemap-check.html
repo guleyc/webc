@@ -1,0 +1,543 @@
+---
+layout: page
+title: Sitemap Detection
+---
+
+<style>
+.sitemap-tool {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.sitemap-search-box {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.sitemap-search-box h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.sitemap-search-box p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.search-form {
+    display: flex;
+    gap: 10px;
+}
+
+.search-input {
+    flex: 1;
+    padding: 12px 16px;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    transition: border-color 0.3s;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #0066cc;
+}
+
+.search-button {
+    padding: 12px 30px;
+    font-size: 16px;
+    font-weight: 600;
+    background: #0066cc;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.search-button:hover {
+    background: #0052a3;
+}
+
+.search-button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.loading {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+}
+
+.spinner {
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #0066cc;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 15px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.result-box {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.sitemap-status {
+    text-align: center;
+    padding: 40px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+}
+
+.sitemap-status.found {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    color: white;
+}
+
+.sitemap-status.not-found {
+    background: linear-gradient(135deg, #ee0979 0%, #ff6a00 100%);
+    color: white;
+}
+
+.status-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+}
+
+.status-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.status-subtitle {
+    font-size: 18px;
+    opacity: 0.9;
+}
+
+.sitemap-list {
+    margin: 30px 0;
+}
+
+.sitemap-item {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 20px;
+    border-left: 4px solid #0066cc;
+}
+
+.sitemap-item h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sitemap-url {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    background: white;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    word-break: break-all;
+}
+
+.sitemap-url a {
+    color: #0066cc;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.sitemap-url a:hover {
+    text-decoration: underline;
+}
+
+.sitemap-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    background: #d4edda;
+    color: #155724;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.sitemap-badge.index {
+    background: #cce5ff;
+    color: #004085;
+}
+
+.sitemap-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.stat-box {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: #0066cc;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    font-size: 13px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.url-samples {
+    margin-top: 15px;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+}
+
+.url-samples h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #555;
+    font-size: 14px;
+}
+
+.url-samples ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.url-samples li {
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+    color: #666;
+    font-size: 14px;
+    word-break: break-all;
+}
+
+.url-samples li:last-child {
+    border-bottom: none;
+}
+
+.robots-section {
+    margin-top: 30px;
+    padding: 25px;
+    background: #e7f3ff;
+    border-left: 4px solid #2196f3;
+    border-radius: 8px;
+}
+
+.robots-section h3 {
+    margin-top: 0;
+    color: #1976d2;
+}
+
+.recommendations {
+    margin-top: 30px;
+    padding: 25px;
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    border-radius: 8px;
+}
+
+.recommendations h3 {
+    margin-top: 0;
+    color: #856404;
+}
+
+.recommendations ul {
+    margin: 15px 0;
+    padding-left: 25px;
+}
+
+.recommendations li {
+    margin: 10px 0;
+    color: #666;
+    line-height: 1.6;
+}
+
+.error-box {
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 8px;
+    padding: 20px;
+    color: #721c24;
+}
+
+.error-box h3 {
+    margin-top: 0;
+    color: #721c24;
+}
+
+@media (max-width: 768px) {
+    .search-form {
+        flex-direction: column;
+    }
+    
+    .status-icon {
+        font-size: 48px;
+    }
+    
+    .status-title {
+        font-size: 24px;
+    }
+    
+    .sitemap-stats {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+</style>
+
+<div class="sitemap-tool">
+    <div class="sitemap-search-box">
+        <h2>🗺️ Sitemap Detection</h2>
+        <p>Check if your website has a valid XML sitemap and analyze its structure.</p>
+        
+        <form class="search-form" id="sitemapForm">
+            <input 
+                type="text" 
+                class="search-input" 
+                id="domainInput" 
+                placeholder="Enter domain name (e.g., example.com)"
+                required
+            >
+            <button type="submit" class="search-button" id="searchButton">
+                Find Sitemap
+            </button>
+        </form>
+    </div>
+    
+    <div id="resultsContainer"></div>
+</div>
+
+<script>
+const API_ENDPOINT = 'https://tools.webc.com.tr/sitemap-check-api.php';
+
+const form = document.getElementById('sitemapForm');
+const input = document.getElementById('domainInput');
+const button = document.getElementById('searchButton');
+const resultsContainer = document.getElementById('resultsContainer');
+
+form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const domain = input.value.trim();
+    if (domain) {
+        performCheck(domain);
+    }
+});
+
+function performCheck(domain) {
+    button.disabled = true;
+    button.textContent = 'Searching...';
+    
+    resultsContainer.innerHTML = `
+        <div class="loading">
+            <div class="spinner"></div>
+            <p>Searching for sitemaps...</p>
+        </div>
+    `;
+    
+    fetch(`${API_ENDPOINT}?domain=${encodeURIComponent(domain)}`)
+        .then(response => response.json())
+        .then(data => {
+            displayResults(data);
+        })
+        .catch(error => {
+            displayError(error.message);
+        })
+        .finally(() => {
+            button.disabled = false;
+            button.textContent = 'Find Sitemap';
+        });
+}
+
+function displayResults(data) {
+    if (!data.success) {
+        displayError(data.message || 'An error occurred during the check.');
+        return;
+    }
+    
+    const hasSitemap = data.has_sitemap;
+    const sitemaps = data.found_sitemaps || [];
+    
+    let html = `
+        <div class="result-box">
+            <div class="sitemap-status ${hasSitemap ? 'found' : 'not-found'}">
+                <div class="status-icon">${hasSitemap ? '✅' : '❌'}</div>
+                <div class="status-title">
+                    ${hasSitemap ? 'Sitemap Found!' : 'No Sitemap Found'}
+                </div>
+                <div class="status-subtitle">
+                    ${hasSitemap ? 
+                        `Found ${data.sitemap_count} sitemap(s)` : 
+                        'No XML sitemaps were detected on this domain'}
+                </div>
+            </div>
+    `;
+    
+    // Display found sitemaps
+    if (sitemaps.length > 0) {
+        html += '<div class="sitemap-list">';
+        
+        sitemaps.forEach((sitemap, index) => {
+            html += `
+                <div class="sitemap-item">
+                    <h3>
+                        🗺️ Sitemap ${index + 1}
+                        <span class="sitemap-badge ${sitemap.analysis?.type === 'sitemap_index' ? 'index' : ''}">
+                            ${sitemap.analysis?.type === 'sitemap_index' ? 'Index' : 'Regular'}
+                        </span>
+                    </h3>
+                    
+                    <div class="sitemap-url">
+                        <span>📄</span>
+                        <a href="${sitemap.url}" target="_blank" rel="noopener">${sitemap.url}</a>
+                    </div>
+            `;
+            
+            if (sitemap.analysis) {
+                if (sitemap.analysis.type === 'sitemap_index') {
+                    html += `
+                        <div class="sitemap-stats">
+                            <div class="stat-box">
+                                <div class="stat-value">${sitemap.analysis.sitemap_count}</div>
+                                <div class="stat-label">Sub-Sitemaps</div>
+                            </div>
+                        </div>
+                        
+                        ${sitemap.analysis.sitemaps && sitemap.analysis.sitemaps.length > 0 ? `
+                            <div class="url-samples">
+                                <h4>Sub-Sitemaps:</h4>
+                                <ul>
+                                    ${sitemap.analysis.sitemaps.slice(0, 5).map(url => 
+                                        `<li>📄 ${escapeHtml(url)}</li>`
+                                    ).join('')}
+                                    ${sitemap.analysis.sitemaps.length > 5 ? 
+                                        `<li>... and ${sitemap.analysis.sitemaps.length - 5} more</li>` : ''}
+                                </ul>
+                            </div>
+                        ` : ''}
+                    `;
+                } else if (sitemap.analysis.type === 'sitemap') {
+                    html += `
+                        <div class="sitemap-stats">
+                            <div class="stat-box">
+                                <div class="stat-value">${sitemap.analysis.url_count}</div>
+                                <div class="stat-label">URLs</div>
+                            </div>
+                        </div>
+                        
+                        ${sitemap.analysis.sample_urls && sitemap.analysis.sample_urls.length > 0 ? `
+                            <div class="url-samples">
+                                <h4>Sample URLs:</h4>
+                                <ul>
+                                    ${sitemap.analysis.sample_urls.map(url => 
+                                        `<li>🔗 ${escapeHtml(url)}</li>`
+                                    ).join('')}
+                                </ul>
+                            </div>
+                        ` : ''}
+                    `;
+                }
+            }
+            
+            html += '</div>';
+        });
+        
+        html += '</div>';
+    }
+    
+    // Robots.txt sitemaps
+    if (data.robots_txt_sitemaps && data.robots_txt_sitemaps.length > 0) {
+        html += `
+            <div class="robots-section">
+                <h3>🤖 Sitemaps Referenced in robots.txt</h3>
+                <ul style="margin: 15px 0; padding-left: 25px;">
+                    ${data.robots_txt_sitemaps.map(url => 
+                        `<li style="margin: 10px 0;"><a href="${escapeHtml(url)}" target="_blank" rel="noopener">${escapeHtml(url)}</a></li>`
+                    ).join('')}
+                </ul>
+            </div>
+        `;
+    }
+    
+    // Recommendations
+    if (!hasSitemap) {
+        html += `
+            <div class="recommendations">
+                <h3>💡 Recommendations</h3>
+                <p>A sitemap helps search engines discover and index your content more efficiently. Here's what you should do:</p>
+                <ul>
+                    <li>Create an XML sitemap for your website</li>
+                    <li>Name it <code>sitemap.xml</code> and place it in your root directory</li>
+                    <li>Reference it in your <code>robots.txt</code> file</li>
+                    <li>Submit it to Google Search Console and Bing Webmaster Tools</li>
+                    <li>Update it regularly when content changes</li>
+                    <li>For large sites, consider using a sitemap index</li>
+                </ul>
+            </div>
+        `;
+    } else {
+        html += `
+            <div class="recommendations">
+                <h3>✅ Good Job!</h3>
+                <p>Your website has a sitemap. Make sure to:</p>
+                <ul>
+                    <li>Keep it updated with new and modified content</li>
+                    <li>Ensure all important pages are included</li>
+                    <li>Submit it to search engines if you haven't already</li>
+                    <li>Monitor for errors in Search Console</li>
+                </ul>
+            </div>
+        `;
+    }
+    
+    html += '</div>';
+    
+    resultsContainer.innerHTML = html;
+}
+
+function displayError(message) {
+    resultsContainer.innerHTML = `
+        <div class="error-box">
+            <h3>⚠️ Error</h3>
+            <p>${escapeHtml(message)}</p>
+            <p>Please check your domain name and try again.</p>
+        </div>
+    `;
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+</script>
