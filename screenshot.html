@@ -107,61 +107,38 @@ title: Website Screenshot
 }
 
 .screenshot-header h2 {
-    margin: 0;
+    margin: 0 0 10px 0;
     font-size: 28px;
 }
 
-.preview-section {
-    margin: 30px 0;
-}
-
-.preview-tabs {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-}
-
-.tab-button {
-    padding: 12px 20px;
-    background: #f8f9fa;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.3s;
-}
-
-.tab-button:hover {
-    background: #e9ecef;
-}
-
-.tab-button.active {
-    background: #0066cc;
-    color: white;
-    border-color: #0066cc;
+.screenshot-header p {
+    margin: 0;
+    opacity: 0.9;
+    font-size: 14px;
 }
 
 .screenshot-preview {
     border-radius: 12px;
     overflow: hidden;
     background: #f8f9fa;
-    min-height: 400px;
+    min-height: 500px;
     display: flex;
     align-items: center;
     justify-content: center;
     border: 2px solid #e0e0e0;
     position: relative;
+    margin: 30px 0;
 }
 
 .screenshot-preview img {
     max-width: 100%;
     height: auto;
     display: block;
+    border-radius: 8px;
 }
 
 .screenshot-loading {
-    padding: 60px 20px;
+    padding: 80px 20px;
     text-align: center;
     color: #666;
 }
@@ -170,79 +147,71 @@ title: Website Screenshot
     margin: 0 auto 20px;
 }
 
-.download-btn {
-    margin-top: 15px;
+.screenshot-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.action-btn {
     padding: 12px 24px;
-    background: #28a745;
-    color: white;
     border: none;
     border-radius: 8px;
     font-weight: 600;
     cursor: pointer;
     text-decoration: none;
     display: inline-block;
+    transition: all 0.3s;
 }
 
-.download-btn:hover {
+.btn-primary {
+    background: #0066cc;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #0052a3;
+}
+
+.btn-success {
+    background: #28a745;
+    color: white;
+}
+
+.btn-success:hover {
     background: #218838;
 }
 
-.service-info {
-    margin-top: 15px;
-    padding: 15px;
-    background: #e7f3ff;
-    border-radius: 8px;
-    font-size: 14px;
-    color: #1976d2;
-}
-
-.screenshot-services {
+.info-section {
     margin-top: 30px;
-    padding: 25px;
-    background: #f8f9fa;
-    border-radius: 12px;
-}
-
-.screenshot-services h3 {
-    margin-top: 0;
-    color: #333;
-}
-
-.service-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 15px;
-    margin-top: 20px;
-}
-
-.service-item {
-    padding: 15px;
-    background: white;
+    padding: 20px;
+    background: #e7f3ff;
+    border-left: 4px solid #2196f3;
     border-radius: 8px;
-    border-left: 4px solid #0066cc;
 }
 
-.service-item h4 {
-    margin: 0 0 10px 0;
-    color: #333;
+.info-section h3 {
+    margin-top: 0;
+    color: #1976d2;
+    font-size: 18px;
 }
 
-.service-item p {
-    margin: 0;
-    font-size: 14px;
-    color: #666;
+.info-section p {
+    margin: 10px 0;
+    color: #555;
+    line-height: 1.6;
 }
 
-.service-item a {
-    display: inline-block;
-    margin-top: 10px;
-    color: #0066cc;
-    text-decoration: none;
-    font-weight: 600;
+.info-section ul {
+    margin: 10px 0;
+    padding-left: 25px;
+    color: #555;
 }
 
-.service-item a:hover {
-    text-decoration: underline;
+.info-section li {
+    margin: 8px 0;
 }
 
 .error-box {
@@ -263,11 +232,11 @@ title: Website Screenshot
         flex-direction: column;
     }
     
-    .preview-tabs {
+    .screenshot-actions {
         flex-direction: column;
     }
     
-    .tab-button {
+    .action-btn {
         width: 100%;
     }
 }
@@ -276,7 +245,7 @@ title: Website Screenshot
 <div class="screenshot-tool">
     <div class="screenshot-search-box">
         <h2>📸 Website Screenshot</h2>
-        <p>Capture screenshots of any website using free screenshot services.</p>
+        <p>Capture high-quality screenshots of any website instantly.</p>
         
         <form class="search-form" id="screenshotForm">
             <input 
@@ -307,18 +276,18 @@ form.addEventListener('submit', function(e) {
     e.preventDefault();
     const domain = input.value.trim();
     if (domain) {
-        generateScreenshots(domain);
+        generateScreenshot(domain);
     }
 });
 
-function generateScreenshots(domain) {
+function generateScreenshot(domain) {
     button.disabled = true;
     button.textContent = 'Generating...';
     
     resultsContainer.innerHTML = `
         <div class="loading">
             <div class="spinner"></div>
-            <p>Preparing screenshot services...</p>
+            <p>Capturing screenshot...</p>
         </div>
     `;
     
@@ -342,121 +311,87 @@ function displayResults(data) {
         return;
     }
     
-    const urls = data.screenshot_urls;
-    const services = [
-        { name: 'PagePeeker', key: 'pagepeeker', description: '✅ Reliable and fast' },
-        { name: 'S-Shot', key: 's_shot', description: '✅ High quality screenshots' },
-        { name: 'ScreenshotAPI', key: 'screenshotapi', description: '✅ Modern and clean' },
-        { name: 'Microlink', key: 'microlink', description: '⚡ Fast with CDN' }
-    ];
+    const screenshotUrl = data.screenshot_url;
     
     let html = `
         <div class="result-box">
             <div class="screenshot-header">
-                <h2>📸 Screenshots for ${data.domain}</h2>
+                <h2>📸 ${data.domain}</h2>
+                <p>Powered by ${data.service}</p>
             </div>
             
-            <div class="preview-section">
-                <div class="preview-tabs" id="previewTabs">
-    `;
-    
-    services.forEach((service, index) => {
-        html += `
-            <button class="tab-button ${index === 0 ? 'active' : ''}" 
-                    onclick="switchPreview('${service.key}', this)">
-                ${service.name}
-            </button>
-        `;
-    });
-    
-    html += `
-                </div>
-                
-                <div id="previewContainer">
-    `;
-    
-    services.forEach((service, index) => {
-        const isActive = index === 0;
-        html += `
-            <div class="screenshot-preview" id="preview-${service.key}" 
-                 style="display: ${isActive ? 'flex' : 'none'}">
+            <div class="screenshot-preview" id="screenshotPreview">
                 <div class="screenshot-loading">
                     <div class="spinner"></div>
-                    <p>Loading ${service.name} screenshot...</p>
-                </div>
-            </div>
-        `;
-    });
-    
-    html += `
-                </div>
-                
-                <div class="service-info">
-                    💡 <strong>Tip:</strong> Screenshots may take a few seconds to load. 
-                    Try different services if one doesn't work. Right-click to save the image.
+                    <p>Loading screenshot...</p>
+                    <p style="font-size: 14px; margin-top: 10px; color: #999;">
+                        This may take a few seconds
+                    </p>
                 </div>
             </div>
             
-            <div class="screenshot-services">
-                <h3>🌐 Available Screenshot Services</h3>
-                <div class="service-grid">
-    `;
-    
-    services.forEach(service => {
-        html += `
-            <div class="service-item">
-                <h4>${service.name}</h4>
-                <p>${service.description}</p>
-                <a href="${urls[service.key]}" target="_blank">Open in New Tab →</a>
+            <div class="screenshot-actions">
+                <a href="${screenshotUrl}" target="_blank" class="action-btn btn-primary">
+                    🔗 Open in New Tab
+                </a>
+                <button onclick="downloadScreenshot('${screenshotUrl}', '${data.domain}')" class="action-btn btn-success">
+                    💾 Download Screenshot
+                </button>
+                <button onclick="refreshScreenshot('${data.domain}')" class="action-btn btn-primary">
+                    🔄 Refresh
+                </button>
             </div>
-        `;
-    });
-    
-    // Premium services
-    if (data.premium_services) {
-        html += `
-            <div class="service-item">
-                <h4>⭐ Premium Options</h4>
-                <p>For production use with API keys</p>
-        `;
-        
-        Object.values(data.premium_services).forEach(service => {
-            html += `<a href="${service.url}" target="_blank">${service.name} →</a><br>`;
-        });
-        
-        html += `</div>`;
-    }
-    
-    html += `
-                </div>
+            
+            <div class="info-section">
+                <h3>💡 About This Screenshot</h3>
+                <p><strong>Service:</strong> Microlink - Fast and reliable screenshot service</p>
+                <p><strong>Features:</strong></p>
+                <ul>
+                    <li>High-quality screenshots</li>
+                    <li>Fast CDN delivery</li>
+                    <li>Automatic caching for repeated requests</li>
+                    <li>Captures full webpage as displayed in browser</li>
+                </ul>
+                <p style="margin-top: 15px;">
+                    <strong>Tip:</strong> Right-click on the image to save it directly, 
+                    or use the download button above.
+                </p>
             </div>
         </div>
     `;
     
     resultsContainer.innerHTML = html;
     
-    // Load screenshots
-    services.forEach(service => {
-        loadScreenshot(service.key, urls[service.key]);
-    });
+    // Load the screenshot
+    loadScreenshot(screenshotUrl);
 }
 
-function loadScreenshot(serviceKey, url) {
-    const container = document.getElementById(`preview-${serviceKey}`);
+function loadScreenshot(url) {
+    const container = document.getElementById('screenshotPreview');
     if (!container) return;
     
     const img = new Image();
     
     img.onload = function() {
-        container.innerHTML = `<img src="${url}" alt="Screenshot">`;
+        container.innerHTML = `<img src="${url}" alt="Website Screenshot">`;
     };
     
     img.onerror = function() {
         container.innerHTML = `
             <div class="screenshot-loading">
-                <p>❌ Failed to load screenshot from this service</p>
-                <p style="font-size: 14px; margin-top: 10px;">
-                    <a href="${url}" target="_blank" style="color: #0066cc;">Try opening in new tab →</a>
+                <p style="color: #dc3545; font-weight: 600;">❌ Failed to load screenshot</p>
+                <p style="font-size: 14px; margin-top: 15px; color: #666;">
+                    This can happen if:
+                </p>
+                <ul style="text-align: left; display: inline-block; margin: 10px 0; color: #666;">
+                    <li>The website blocks automated screenshots</li>
+                    <li>The website takes too long to load</li>
+                    <li>Temporary service issues</li>
+                </ul>
+                <p style="margin-top: 15px;">
+                    <a href="${url}" target="_blank" style="color: #0066cc; font-weight: 600;">
+                        Try opening in new tab →
+                    </a>
                 </p>
             </div>
         `;
@@ -465,25 +400,19 @@ function loadScreenshot(serviceKey, url) {
     img.src = url;
 }
 
-function switchPreview(serviceKey, button) {
-    // Hide all previews
-    const previews = document.querySelectorAll('[id^="preview-"]');
-    previews.forEach(preview => {
-        preview.style.display = 'none';
-    });
-    
-    // Show selected preview
-    const selectedPreview = document.getElementById(`preview-${serviceKey}`);
-    if (selectedPreview) {
-        selectedPreview.style.display = 'flex';
-    }
-    
-    // Update active button
-    const buttons = document.querySelectorAll('.tab-button');
-    buttons.forEach(btn => {
-        btn.classList.remove('active');
-    });
-    button.classList.add('active');
+function downloadScreenshot(url, domain) {
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `screenshot-${domain}-${Date.now()}.png`;
+    link.target = '_blank';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+function refreshScreenshot(domain) {
+    input.value = domain;
+    generateScreenshot(domain);
 }
 
 function displayError(message) {
