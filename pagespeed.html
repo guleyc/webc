@@ -151,6 +151,11 @@ title: PageSpeed Insights
     background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
 }
 
+.score-card.no-data {
+    background: linear-gradient(135deg, #9ca3af 0%, #6b7280 100%);
+    opacity: 0.6;
+}
+
 .score-value {
     font-size: 48px;
     font-weight: 700;
@@ -166,11 +171,10 @@ title: PageSpeed Insights
     font-weight: 600;
 }
 
-.score-ring {
-    width: 100px;
-    height: 100px;
-    margin: 0 auto 15px;
-    position: relative;
+.score-status {
+    font-size: 12px;
+    color: rgba(255,255,255,0.8);
+    margin-top: 5px;
 }
 
 .metrics-section {
@@ -208,6 +212,18 @@ title: PageSpeed Insights
     font-size: 18px;
 }
 
+.metric-value.good {
+    color: #28a745;
+}
+
+.metric-value.moderate {
+    color: #ffc107;
+}
+
+.metric-value.poor {
+    color: #dc3545;
+}
+
 .report-link {
     display: block;
     text-align: center;
@@ -235,6 +251,19 @@ title: PageSpeed Insights
 
 .info-note strong {
     color: #1976d2;
+}
+
+.no-data-message {
+    text-align: center;
+    padding: 40px 20px;
+    background: #fff3cd;
+    border-radius: 12px;
+    margin: 20px 0;
+}
+
+.no-data-message h3 {
+    color: #856404;
+    margin-top: 0;
 }
 
 .error-box {
@@ -340,6 +369,7 @@ function performAnalysis(domain) {
         <div class="loading">
             <div class="spinner"></div>
             <p>Running PageSpeed analysis... This may take up to 30 seconds.</p>
+            <p style="font-size: 14px; color: #999; margin-top: 10px;">Analyzing ${currentStrategy} performance...</p>
         </div>
     `;
     
@@ -366,6 +396,10 @@ function displayResults(data) {
     const scores = data.scores || {};
     const metrics = data.metrics || {};
     
+    // Check if we have any data
+    const hasScores = Object.values(scores).some(score => score !== null);
+    const hasMetrics = Object.values(metrics).some(metric => metric !== null);
+    
     let html = `
         <div class="result-box">
             <h2>Performance Report - ${data.strategy === 'mobile' ? '📱 Mobile' : '💻 Desktop'}</h2>
@@ -374,116 +408,73 @@ function displayResults(data) {
     `;
     
     // Performance Score
-    if (scores.performance !== null) {
-        html += `
-            <div class="score-card performance">
-                <div class="score-value">${scores.performance}</div>
-                <div class="score-label">Performance</div>
-            </div>
-        `;
-    }
+    html += createScoreCard('Performance', scores.performance, 'performance');
     
     // Accessibility Score
-    if (scores.accessibility !== null) {
-        html += `
-            <div class="score-card accessibility">
-                <div class="score-value">${scores.accessibility}</div>
-                <div class="score-label">Accessibility</div>
-            </div>
-        `;
-    }
+    html += createScoreCard('Accessibility', scores.accessibility, 'accessibility');
     
     // Best Practices Score
-    if (scores.best_practices !== null) {
-        html += `
-            <div class="score-card best-practices">
-                <div class="score-value">${scores.best_practices}</div>
-                <div class="score-label">Best Practices</div>
-            </div>
-        `;
-    }
+    html += createScoreCard('Best Practices', scores.best_practices, 'best-practices');
     
     // SEO Score
-    if (scores.seo !== null) {
-        html += `
-            <div class="score-card seo">
-                <div class="score-value">${scores.seo}</div>
-                <div class="score-label">SEO</div>
-            </div>
-        `;
-    }
+    html += createScoreCard('SEO', scores.seo, 'seo');
     
     html += '</div>';
     
     // Performance Metrics
-    if (Object.keys(metrics).length > 0) {
+    if (hasMetrics) {
         html += `
             <div class="metrics-section">
                 <h3>⏱️ Performance Metrics</h3>
         `;
         
-        if (metrics.first_contentful_paint) {
-            html += `
-                <div class="metric-item">
-                    <div class="metric-label">First Contentful Paint</div>
-                    <div class="metric-value">${metrics.first_contentful_paint}</div>
-                </div>
-            `;
-        }
+        const metricsList = [
+            { key: 'first_contentful_paint', label: 'First Contentful Paint' },
+            { key: 'speed_index', label: 'Speed Index' },
+            { key: 'largest_contentful_paint', label: 'Largest Contentful Paint' },
+            { key: 'time_to_interactive', label: 'Time to Interactive' },
+            { key: 'total_blocking_time', label: 'Total Blocking Time' },
+            { key: 'cumulative_layout_shift', label: 'Cumulative Layout Shift' }
+        ];
         
-        if (metrics.speed_index) {
-            html += `
-                <div class="metric-item">
-                    <div class="metric-label">Speed Index</div>
-                    <div class="metric-value">${metrics.speed_index}</div>
-                </div>
-            `;
-        }
+        let hasAnyMetric = false;
+        metricsList.forEach(metric => {
+            if (metrics[metric.key]) {
+                hasAnyMetric = true;
+                html += `
+                    <div class="metric-item">
+                        <div class="metric-label">${metric.label}</div>
+                        <div class="metric-value">${metrics[metric.key]}</div>
+                    </div>
+                `;
+            }
+        });
         
-        if (metrics.largest_contentful_paint) {
-            html += `
-                <div class="metric-item">
-                    <div class="metric-label">Largest Contentful Paint</div>
-                    <div class="metric-value">${metrics.largest_contentful_paint}</div>
-                </div>
-            `;
-        }
-        
-        if (metrics.time_to_interactive) {
-            html += `
-                <div class="metric-item">
-                    <div class="metric-label">Time to Interactive</div>
-                    <div class="metric-value">${metrics.time_to_interactive}</div>
-                </div>
-            `;
-        }
-        
-        if (metrics.total_blocking_time) {
-            html += `
-                <div class="metric-item">
-                    <div class="metric-label">Total Blocking Time</div>
-                    <div class="metric-value">${metrics.total_blocking_time}</div>
-                </div>
-            `;
-        }
-        
-        if (metrics.cumulative_layout_shift) {
-            html += `
-                <div class="metric-item">
-                    <div class="metric-label">Cumulative Layout Shift</div>
-                    <div class="metric-value">${metrics.cumulative_layout_shift}</div>
-                </div>
-            `;
+        if (!hasAnyMetric) {
+            html += `<p style="color: #666; text-align: center;">Detailed metrics not available for this analysis.</p>`;
         }
         
         html += '</div>';
+    } else {
+        html += `
+            <div class="no-data-message">
+                <h3>⚠️ Limited Data Available</h3>
+                <p>Some performance metrics couldn't be retrieved. This can happen due to:</p>
+                <ul style="text-align: left; display: inline-block; margin: 15px 0;">
+                    <li>Website taking too long to load</li>
+                    <li>Website blocking automated analysis</li>
+                    <li>Temporary API limitations</li>
+                </ul>
+                <p>Try the full web report for complete analysis.</p>
+            </div>
+        `;
     }
     
     // Full Report Link
     if (data.full_report_url) {
         html += `
             <a href="${data.full_report_url}" target="_blank" class="report-link">
-                📊 View Full PageSpeed Report
+                📊 View Full PageSpeed Report (Detailed Analysis)
             </a>
         `;
     }
@@ -492,13 +483,43 @@ function displayResults(data) {
     html += `
         <div class="info-note">
             <strong>📌 About These Scores:</strong>
-            <p>Scores are weighted averages calculated by Google Lighthouse. A score of 90+ is considered good, 50-89 needs improvement, and below 50 is poor.</p>
+            <p>Scores are calculated by Google Lighthouse:</p>
+            <ul style="margin: 10px 0; padding-left: 20px;">
+                <li><strong>90-100:</strong> Good ✅</li>
+                <li><strong>50-89:</strong> Needs Improvement ⚠️</li>
+                <li><strong>0-49:</strong> Poor ❌</li>
+            </ul>
+            <p style="margin-top: 10px;">For complete optimization recommendations, view the full report above.</p>
         </div>
     `;
     
     html += '</div>';
     
     resultsContainer.innerHTML = html;
+}
+
+function createScoreCard(label, score, type) {
+    if (score === null || score === undefined) {
+        return `
+            <div class="score-card no-data">
+                <div class="score-value">N/A</div>
+                <div class="score-label">${label}</div>
+                <div class="score-status">No data</div>
+            </div>
+        `;
+    }
+    
+    let status = 'Good';
+    if (score < 50) status = 'Poor';
+    else if (score < 90) status = 'Needs Work';
+    
+    return `
+        <div class="score-card ${type}">
+            <div class="score-value">${score}</div>
+            <div class="score-label">${label}</div>
+            <div class="score-status">${status}</div>
+        </div>
+    `;
 }
 
 function displayError(message) {
